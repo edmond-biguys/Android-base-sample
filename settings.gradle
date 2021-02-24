@@ -1,2 +1,4 @@
+include ':ktsample'
+include ':permission'
 include ':app'
 rootProject.name = "AndroidBaseSample"

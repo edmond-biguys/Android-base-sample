@@ -1,6 +1,6 @@
 package com.xmcc.androidbasesample
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
@@ -72,6 +72,7 @@ class FullscreenActivity : AppCompatActivity() {
         // Set up the user interaction to manually show or hide the system UI.
         fullscreenContent = findViewById(R.id.fullscreen_content)
         fullscreenContent.setOnClickListener { toggle() }
+        fullscreenContent.text = BuildConfig.VERSION_NAME
 
         fullscreenContentControls = findViewById(R.id.fullscreen_content_controls)
 

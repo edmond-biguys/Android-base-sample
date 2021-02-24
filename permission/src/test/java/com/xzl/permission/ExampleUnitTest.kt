@@ -1,4 +1,4 @@
-package com.xmcc.androidbasesample
+package com.xzl.permission
 
 import org.junit.Test
 
@@ -13,12 +13,5 @@ class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
         assertEquals(4, 2 + 2)
-        println("abc")
     }
-
-
-}
-
-fun main(args: Array<String>) {
-
 }
