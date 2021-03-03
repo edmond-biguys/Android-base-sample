@@ -1,5 +1,6 @@
 package com.xmcc.ktsample.basic
 
+import java.math.BigDecimal
 import kotlin.random.Random
 
 class ForFresh {
@@ -144,6 +145,126 @@ class ForFresh {
         val numbers = mutableListOf("one", "two", "three", "four", "five")
         val result = numbers.map { "$it abc" }.map { "$it cd" }.filter { it.length > 5 }
         println(result)
+
+        val number = Random.nextInt(100)
+        val takeIfNumber: Int? = number.takeIf { it % 2 == 0 }
+        val takeUnlessNumber = number.takeUnless { it % 2 == 0 }
+        val abc = takeIfNumber.toString()
+        println("number $number takeIf $takeIfNumber takeUnless $takeUnlessNumber")
+        repeat(2) {
+            println(it)
+        }
+
+    }
+
+    //浮点数
+    fun testFloatData() {
+        var f1: Float = 1.23456f
+        println(f1)
+        f1 = 1.234567f
+        println(f1)
+        f1 = 1.2345678f
+        println(f1)
+        f1 = 1234.01266567890123456789123456789123456789f
+        println(f1)
+        var d1: Double = 12345.01234567891204567890123456789123456789
+        println(d1)
+        d1 = 123456789012345678901234567890.0
+        println(d1)
+        var d2: BigDecimal = BigDecimal("12345678901234567890123456789012345678901234567890.0")
+        var d3: BigDecimal = BigDecimal("0.1")
+        println(d2)
+        println(d3)
+        println(d2 + d3)
+        //float 结构
+        //sign    exponent      mantissa
+        // 1        8               23
+        //float 有效位数为 2^23 -> 6-7位有效数字，显示的第8位不是准确数值
+
+        //double 结构
+        //sign    exponent      mantissa
+        // 1        11               52
+        //float 有效位数为 2^52 -> 15-16位有效数字，显示的第17位不是准确数值
+
+    }
+
+    //基本类型
+    //数字 整数 Byte 8, Short 16, Int 32, Long 64
+    fun testNumber() {
+        //显示转换
+        val i1 = "100".toInt()
+        val l1: Long = 1.0.toLong()
+        val f1: Float = 1.toFloat()
+        //隐式转换
+        val l2 = 2L + 1
+        val d2 = 2.0 + 1
+    }
+
+    //位运算
+    /*
+    shl 有符号左移
+    shr 有符号右移
+    ushr 无符号右移
+    and 位与
+    or 位或
+    xor 位异或
+    inv 位非
+     */
+    fun bitOperation() {
+        //shl 有符号左移 0000 0001 -> 0000 0100
+        println(-1 shl 2)
+        //shr 有符号右移
+        println(-7 shr 1)
+        println(-9 shr 1)
+        //println(-7/2)
+
+//        println(1 and  3)
+//        println(1 or 2)
+//        println(1 xor 2)
+//        println(1 xor 5)
+//        println("------")
+//        println(0.inv())
+//        println(1.inv())
+//        println(2.inv())
+//        println(3.inv())
+//        println(4.inv())
+//        println(5.inv())
+//        println(6.inv())
+//        println(7.inv())
+//        println(8.inv())
+//        println(9.inv())
+//        val i1: Int = 3
+//        //println(i1.inv())
+//        //wrap unary operator and value with ()
+//        println("------")
+//        println((-1).inv())
+//        println((-2).inv())
+//        println((-3).inv())
+//        println((-4).inv())
+//        println((-5).inv())
+//        println((-6).inv())
+//        println((-7).inv())
+//        println((-8).inv())
+//        println((-9).inv())
+    }
+
+    fun testString() {
+        //原始字符串，用三个引号表示，
+        println(""" abc
+        > dflsdjfls
+        | djfladjflasd
+        | 
+    """.trimMargin(">"))
+
+        println(""" abc
+        > dflsdjfls
+        | djfladjflasd
+        | 
+    """.trimMargin()) //默认为｜
+    }
+
+    companion object  {
+        val ForFresh_test01 = "abc"
     }
 
 }
@@ -158,9 +279,17 @@ class Person(
     }
 }
 
+fun testTopFunction() {
+    println("this is top function")
+}
+
 fun main(args: Array<String>) {
     val forFresh = ForFresh()
 //    forFresh.aNullStory(1.0)
 //    forFresh.loopStatementFor()
-    forFresh.scopeFunctionInstruction()
+//    forFresh.scopeFunctionInstruction()
+//    forFresh.testFloatData()
+//    forFresh.bitOperation()
+    forFresh.testString()
+
 }
