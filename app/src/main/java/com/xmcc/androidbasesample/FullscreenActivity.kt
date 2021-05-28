@@ -2,6 +2,7 @@ package com.xmcc.androidbasesample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.MotionEvent
@@ -9,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.xmcc.androidbasesample.device.bluetooth.BlueToothActivity
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -80,6 +82,8 @@ class FullscreenActivity : AppCompatActivity() {
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
         findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
+
+        startActivity(Intent(this, BlueToothActivity::class.java))
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

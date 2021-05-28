@@ -1,7 +1,6 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
 }
 
 android {
@@ -17,7 +16,6 @@ android {
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
-
     flavorDimensions "version"
     productFlavors {
         free {
@@ -51,11 +49,9 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat}"
     implementation project(path: ':permission')
-    implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation project(path: ':jetpack')
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-
+    implementation 'com.orhanobut:logger:2.2.0'
 }
