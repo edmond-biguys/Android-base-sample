@@ -91,6 +91,10 @@ class FullscreenActivity : AppCompatActivity() {
         delayedHide(100)
     }
 
+    fun test01(): Unit {
+
+    }
+
     private fun toggle() {
         if (isFullscreen) {
             hide()

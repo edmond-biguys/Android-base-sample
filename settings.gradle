@@ -1,3 +1,4 @@
+include ':jetpack'
 include ':ktsample'
 include ':permission'
 include ':app'
