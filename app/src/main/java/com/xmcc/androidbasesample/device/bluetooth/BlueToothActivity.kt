@@ -16,6 +16,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.orhanobut.logger.Logger
 import com.xmcc.androidbasesample.R
+import kotlinx.android.synthetic.main.activity_blue_tooth.*
 
 
 class BlueToothActivity : AppCompatActivity() {
@@ -27,32 +28,40 @@ class BlueToothActivity : AppCompatActivity() {
             ActivityCompat.requestPermissions(this,
                 permissions, 123)
         }
-
-        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
-//        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
-        registerReceiver(receiver, filter)
-        println("blue tooth")
-
-        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
-        Thread {
-            while (flag) {
-                println("startDiscovery")
-                mBluetoothAdapter.startDiscovery()
-                Thread.sleep(5_000)
-                mBluetoothAdapter.cancelDiscovery()
+        buttonStartDiscovery.setOnClickListener {
+            val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 150)
             }
+            startActivity(discoverableIntent)
+        }
+
+
+        Thread {
+            Thread.sleep(10_000)
+            println("start discoverable")
+            val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
+                putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 150)
+            }
+            startActivity(discoverableIntent)
         }.start()
 
+//        val filter = IntentFilter(BluetoothDevice.ACTION_FOUND)
+////        filter.addAction(BluetoothDevice.ACTION_ACL_CONNECTED)
+//        registerReceiver(receiver, filter)
+        println("blue tooth")
+
+//        val mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
+//        Thread {
+//            while (flag) {
+//                println("startDiscovery")
+//                mBluetoothAdapter.startDiscovery()
+//                Thread.sleep(5_000)
+//                mBluetoothAdapter.cancelDiscovery()
+//            }
+//        }.start()
+
         //实例化扫描类
         //实例化扫描类
-        val ScanActivity = DeviceScanActivity()
-        ScanActivity.bluetoothAdapter = mBluetoothAdapter
-        //实例化Ble类
-        //实例化Ble类
-        ScanActivity.makeBleInstance()
-        //启动扫描
-        //启动扫描
-        ScanActivity.scanLeDevice(true)
     }
 
 
@@ -60,7 +69,7 @@ class BlueToothActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         flag = false
-        unregisterReceiver(receiver)
+//        unregisterReceiver(receiver)
     }
     private val receiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
@@ -101,5 +110,10 @@ class BlueToothActivity : AppCompatActivity() {
             super.onReadRemoteRssi(gatt, rssi, status)
             println("onReadRemoteRssi $rssi")
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        println("onActivityResult requestCode $requestCode resultCode $resultCode ")
     }
 }
