@@ -11,12 +11,16 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.orhanobut.logger.Logger
 import com.xmcc.androidbasesample.R
 import kotlinx.android.synthetic.main.activity_blue_tooth.*
+import kotlinx.android.synthetic.main.item_main.*
+import kotlin.math.max
+
 
 
 class BlueToothActivity : AppCompatActivity() {
@@ -34,6 +38,12 @@ class BlueToothActivity : AppCompatActivity() {
             }
             startActivity(discoverableIntent)
         }
+
+
+        val listener = View.OnClickListener { v -> v.id }
+        buttonStartDiscovery.setOnClickListener(listener)
+        buttonStartDiscovery.setOnClickListener {  }
+        buttonStartDiscovery.setOnClickListener({})
 
 
         Thread {
@@ -63,6 +73,9 @@ class BlueToothActivity : AppCompatActivity() {
         //实例化扫描类
         //实例化扫描类
     }
+
+
+
 
 
     var flag = true

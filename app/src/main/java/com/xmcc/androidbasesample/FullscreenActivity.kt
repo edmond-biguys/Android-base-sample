@@ -11,6 +11,8 @@ import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.xmcc.androidbasesample.device.bluetooth.BlueToothActivity
+import com.xmcc.androidbasesample.fragment.navigation.FragmentNavigationUseActivity
+import kotlinx.android.synthetic.main.activity_fullscreen.*
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -83,7 +85,20 @@ class FullscreenActivity : AppCompatActivity() {
         // while interacting with the UI.
         findViewById<Button>(R.id.dummy_button).setOnTouchListener(delayHideTouchListener)
 
-        startActivity(Intent(this, BlueToothActivity::class.java))
+        //startActivity(Intent(this, BlueToothActivity::class.java))
+
+        setListener()
+
+    }
+
+
+    private fun setListener() {
+        buttonJumpToNavigationTest.setOnClickListener {
+            startActivity(Intent(this, FragmentNavigationUseActivity::class.java))
+        }
+        buttonJumpToBluetoothTest.setOnClickListener {
+            startActivity(Intent(this, BlueToothActivity::class.java))
+        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

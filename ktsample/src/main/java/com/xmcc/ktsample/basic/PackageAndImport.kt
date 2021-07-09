@@ -15,5 +15,5 @@ class PackageAndImport {
 }
 
 fun main(args: Array<String>) {
-
+    "abcd".lastChar123()
 }

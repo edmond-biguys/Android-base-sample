@@ -283,13 +283,65 @@ fun testTopFunction() {
     println("this is top function")
 }
 
+//以函数作为参数或返回函数的函数被称为高阶函数
+class HigherOrderFunction {
+    fun buildCar(material: String, flag: String, buildEngine: (material: String, manufacturer: String) -> String ) {
+        println(buildEngine(material, flag))
+    }
+
+    fun buildDaZhong(material: String, manufacturer: String): String {
+        return "this is dazhong engine"
+    }
+
+    fun buildBenz(material: String, manufacturer: String): String {
+        return "this is Benz engine"
+    }
+
+}
+
 fun main(args: Array<String>) {
-    val forFresh = ForFresh()
+
+    val higherOrderFunction = HigherOrderFunction()
+
+    higherOrderFunction.buildCar("铁", "dazhong") { a, b -> a + b }
+
+    val buildEngine: (String, String) -> String = {
+        a, b -> a + b
+    }
+
+    val buildEngine2 = {x: String, y: String -> x + y}
+
+    //val buildEngine2(a: String, b: String): String{return a + b}
+
+    higherOrderFunction.buildCar("钢", "benz", buildEngine)
+    higherOrderFunction.buildCar("金", "BYD", buildEngine2)
+
+    println("abcde".filter {
+        it == 'a'
+    })
+
+    val list = listOf("abc", "abcd", "abcde")
+    val list2 = list.filter {
+        it.length > 3
+    }
+    println(list2)
+    println("caojian".lastChar123())
+    println(1.大于1())
+    println(2.大于1())
+    println("".空的())
+
+//    val forFresh = ForFresh()
 //    forFresh.aNullStory(1.0)
 //    forFresh.loopStatementFor()
 //    forFresh.scopeFunctionInstruction()
 //    forFresh.testFloatData()
 //    forFresh.bitOperation()
-    forFresh.testString()
+//    forFresh.testString()
 
 }
+
+fun String.lastChar123(): Char = this.get(this.length - 1)
+
+fun Int.大于1(): Boolean = this > 1
+
+fun String.空的(): Boolean = this.isEmpty()
