@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import com.xmcc.androidbasesample.device.bluetooth.BlueToothActivity
 import com.xmcc.androidbasesample.fragment.navigation.FragmentNavigationUseActivity
+import com.xmcc.androidbasesample.fragment.navigation.TestJumpTimeActivity
 import kotlinx.android.synthetic.main.activity_fullscreen.*
 
 /**
@@ -94,10 +95,17 @@ class FullscreenActivity : AppCompatActivity() {
 
     private fun setListener() {
         buttonJumpToNavigationTest.setOnClickListener {
+            println("caoj full activity click ${System.currentTimeMillis()}")
             startActivity(Intent(this, FragmentNavigationUseActivity::class.java))
+            overridePendingTransition(0, 0)
         }
         buttonJumpToBluetoothTest.setOnClickListener {
             startActivity(Intent(this, BlueToothActivity::class.java))
+        }
+
+        buttonJumpToTestJumpTimeTest.setOnClickListener {
+            startActivity(Intent(this, TestJumpTimeActivity::class.java))
+            overridePendingTransition(0, 0)
         }
     }
 

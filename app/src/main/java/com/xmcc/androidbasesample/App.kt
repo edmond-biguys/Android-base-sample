@@ -24,6 +24,6 @@ class App: Application() {
         super.onCreate()
         app = this
         Logger.addLogAdapter(AndroidLogAdapter())
-        startService(Intent(this, BluetoothService::class.java))
+//        startService(Intent(this, BluetoothService::class.java))
     }
 }

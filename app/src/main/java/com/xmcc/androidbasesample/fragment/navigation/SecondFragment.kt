@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.navigation.Navigation
 import com.xmcc.androidbasesample.R
+import kotlinx.android.synthetic.main.fragment_second.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +38,12 @@ class SecondFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second, container, false)
+        val view = inflater.inflate(R.layout.fragment_second, container, false)
+        view.findViewById<Button>(R.id.buttonBackToFirstFragment).setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_secondFragment_to_firstFragment)
+        }
+        println("caoj second Fragment view create ${System.currentTimeMillis()}")
+        return view
     }
 
     companion object {

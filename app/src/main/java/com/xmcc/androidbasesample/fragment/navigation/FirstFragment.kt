@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
 import kotlinx.android.synthetic.main.fragment_first.*
 
@@ -39,7 +41,21 @@ class FirstFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_first, container, false)
         view.findViewById<Button>(R.id.buttonNavigateToSecondFragment).setOnClickListener {
+            println("caoj First Fragment click ${System.currentTimeMillis()}")
             Navigation.findNavController(it).navigate(R.id.action_firstFragment_to_secondFragment)
+        }
+        view.findViewById<Button>(R.id.buttonToSettingsFragment).setOnClickListener {
+            Navigation.findNavController(it).navigate(R.id.action_firstFragment_to_settingsFragment)
+            
+            /*
+                Fragment.findNavController()
+                View.findNavController()
+                Activity.findNavController(viewId: Int)
+             */
+        }
+
+        view.findViewById<Button>(R.id.buttonToNavigationTest).setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
         }
         return view
     }

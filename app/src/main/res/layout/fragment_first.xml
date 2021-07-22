@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".FirstFragment">
+    tools:context=".fragment.navigation.FragmentNavigationUseActivity">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -18,6 +18,22 @@
         android:layout_height="48dp"
         android:layout_marginTop="100dp"
         android:text="navigate to second"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/buttonToSettingsFragment"
+        android:layout_marginTop="150dp"
+        android:text="navigate to settings"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/buttonToNavigationTest"
+        android:layout_marginTop="200dp"
+        android:text="navigate to navigation test"
         />
 
 </FrameLayout>

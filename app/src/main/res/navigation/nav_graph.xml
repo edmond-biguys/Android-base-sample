@@ -13,10 +13,28 @@
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/secondFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_testNavigationActivity"
+            app:destination="@id/testNavigationActivity" />
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.xmcc.androidbasesample.fragment.navigation.SecondFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/fragment_second" >
+        <action
+            android:id="@+id/action_secondFragment_to_firstFragment"
+            app:destination="@id/firstFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.xmcc.androidbasesample.SettingsFragment"
+        android:label="SettingsFragment" />
+    <activity
+        android:id="@+id/testNavigationActivity"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.TestNavigationActivity"
+        android:label="TestNavigationActivity" />
 </navigation>

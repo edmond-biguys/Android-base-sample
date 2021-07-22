@@ -21,7 +21,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidBaseSample">
-        <activity android:name=".fragment.navigation.FragmentNavigationUseActivity"></activity>
+        <activity
+            android:name=".fragment.navigation.TestNavigationActivity"
+            android:label="@string/title_activity_test_navigation"></activity>
+        <activity
+            android:name=".fragment.navigation.TestJumpTimeActivity"
+            android:theme="@style/Animation2" />
+        <activity
+            android:name=".fragment.navigation.FragmentNavigationUseActivity"
+            android:theme="@style/Animation" />
 
         <service
             android:name=".device.bluetooth.BluetoothService"

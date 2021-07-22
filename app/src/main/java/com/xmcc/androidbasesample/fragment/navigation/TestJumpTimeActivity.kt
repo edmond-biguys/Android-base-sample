@@ -1,15 +1,13 @@
 package com.xmcc.androidbasesample.fragment.navigation
 
+import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.xmcc.androidbasesample.R
-import kotlinx.android.synthetic.main.fragment_first.*
 
-class FragmentNavigationUseActivity : AppCompatActivity() {
+class TestJumpTimeActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fragment_navigation_use)
-        println("caoj navigation activity create ${System.currentTimeMillis()}")
-
+        setContentView(R.layout.activity_test_jump_time)
     }
 }

@@ -3,7 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SecondFragment">
+    tools:context=".fragment.navigation.SecondFragment">
+
+    <Button
+        android:id="@+id/buttonBackToFirstFragment"
+        android:text="back to first fragment"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        style="@style/Widget.MaterialComponents.Button"
+        />
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
