@@ -5,12 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import androidx.navigation.Navigation
+import android.widget.Toast
+import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
-import com.xmcc.androidbasesample.databinding.FragmentSecondBinding
-import kotlinx.android.synthetic.main.fragment_second.*
+import com.xmcc.androidbasesample.databinding.FragmentNavigationDialogBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -19,10 +18,10 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SecondFragment.newInstance] factory method to
+ * Use the [NavigationDialogFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SecondFragment : Fragment() {
+class NavigationDialogFragment : DialogFragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -35,24 +34,18 @@ class SecondFragment : Fragment() {
         }
     }
 
-    private lateinit var binding: FragmentSecondBinding
-
+    private lateinit var binding: FragmentNavigationDialogBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        println("caoj second Fragment view create ${System.currentTimeMillis()}")
+        binding = FragmentNavigationDialogBinding.inflate(inflater, container, false)
+        binding.buttonToAnotherFragment.setOnClickListener {
+            Toast.makeText(context, "binding win", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
 
-        binding = FragmentSecondBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        binding.buttonBackToFirstFragment.setOnClickListener {
-            println("do nothing")
-//            findNavController().navigate(R.id.action_pop_to_first_fragment)
         }
+        return binding.root
     }
 
     companion object {
@@ -62,12 +55,12 @@ class SecondFragment : Fragment() {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment SecondFragment.
+         * @return A new instance of fragment NavigationDialogFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            SecondFragment().apply {
+            NavigationDialogFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)

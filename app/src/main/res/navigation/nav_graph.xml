@@ -5,6 +5,12 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/firstFragment">
 
+    <action
+        android:id="@+id/action_pop_to_first_fragment"
+        app:popUpTo="@id/nav_graph"
+        app:popUpToInclusive="true"
+        />
+
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.xmcc.androidbasesample.fragment.navigation.FirstFragment"
@@ -19,6 +25,21 @@
         <action
             android:id="@+id/action_firstFragment_to_testNavigationActivity"
             app:destination="@id/testNavigationActivity" />
+        <action
+            android:id="@+id/action_firstFragment_to_viewBindingTestActivity"
+            app:destination="@id/viewBindingTestActivity" />
+        <action
+            android:id="@+id/action_firstFragment_to_navigationDialogFragment"
+            app:destination="@id/navigationDialogFragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_my_dialog_fragment"
+            app:destination="@id/my_dialog_fragment" />
+        <action
+            android:id="@+id/action_firstFragment_to_testSchemeActivity"
+            app:destination="@id/testSchemeActivity" />
+        <action
+            android:id="@+id/action_firstFragment_to_testDynamicSchemeActivity"
+            app:destination="@id/testDynamicSchemeActivity" />
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
@@ -37,4 +58,43 @@
         android:id="@+id/testNavigationActivity"
         android:name="com.xmcc.androidbasesample.fragment.navigation.TestNavigationActivity"
         android:label="TestNavigationActivity" />
+    <activity
+        android:id="@+id/viewBindingTestActivity"
+        android:name="com.xmcc.androidbasesample.viewbindingtest.ViewBindingTestActivity"
+        android:label="activity_view_binding_test"
+        tools:layout="@layout/activity_view_binding_test" />
+
+    <dialog
+        android:id="@+id/my_dialog_fragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.NavigationDialogFragment"
+        >
+        <action
+            android:id="@+id/myDialogAction"
+            app:destination="@+id/destinationNameXXX"
+            />
+
+    </dialog>
+    <fragment
+        android:id="@+id/navigationDialogFragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.NavigationDialogFragment"
+        android:label="fragment_navigation_dialog"
+        tools:layout="@layout/fragment_navigation_dialog" />
+    <activity
+        android:id="@+id/testSchemeActivity"
+        android:label="activity_test_scheme"
+        app:action="android.intent.action.VIEW"
+        app:data="https://example.com"
+        app:targetPackage="${applicationId}"
+        tools:layout="@layout/activity_test_scheme" />
+    <activity
+        android:id="@+id/testDynamicSchemeActivity"
+        android:label="activity_test_dynamic_scheme"
+        app:action="android.intent.action.VIEW"
+        app:dataPattern="https://example.com?userId={userId}"
+        app:targetPackage="${applicationId}"
+        tools:layout="@layout/activity_test_dynamic_scheme" >
+    <argument android:name="userId"
+        app:argType="string"
+        />
+    </activity>
 </navigation>

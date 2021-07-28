@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.xmcc.androidbasesample">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
@@ -21,9 +22,32 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidBaseSample">
+        <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW"/>
+                <data android:host="example.com"
+                    android:scheme="https"
+                    />
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+
+        </activity>
+        <activity android:name=".fragment.navigation.TestSchemeActivity">
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+
+                <data
+                    android:host="example.com"
+                    android:scheme="https" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".viewbindingtest.ViewBindingInAdapterActivity" />
+        <activity android:name=".viewbindingtest.ViewBindingTestActivity" />
         <activity
             android:name=".fragment.navigation.TestNavigationActivity"
-            android:label="@string/title_activity_test_navigation"></activity>
+            android:label="@string/title_activity_test_navigation" />
         <activity
             android:name=".fragment.navigation.TestJumpTimeActivity"
             android:theme="@style/Animation2" />
@@ -42,6 +66,16 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:theme="@style/Theme.AndroidBaseSample.Fullscreen">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".home.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.AndroidBaseSample.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

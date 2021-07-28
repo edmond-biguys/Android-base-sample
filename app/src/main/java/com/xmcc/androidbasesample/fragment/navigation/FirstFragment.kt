@@ -1,15 +1,16 @@
 package com.xmcc.androidbasesample.fragment.navigation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
+import com.xmcc.androidbasesample.databinding.FragmentFirstBinding
 import kotlinx.android.synthetic.main.fragment_first.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,24 +30,36 @@ class FirstFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("FirstFragment onCreate")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
 
+    private lateinit var binding: FragmentFirstBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_first, container, false)
-        view.findViewById<Button>(R.id.buttonNavigateToSecondFragment).setOnClickListener {
-            println("caoj First Fragment click ${System.currentTimeMillis()}")
+        println("FirstFragment onCreateView")
+        binding = FragmentFirstBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        println("FirstFragment onViewCreated")
+        binding.buttonNavigateToSecondFragment.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_firstFragment_to_secondFragment)
         }
-        view.findViewById<Button>(R.id.buttonToSettingsFragment).setOnClickListener {
+
+        binding.buttonToNavigationTest.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
+        }
+
+        binding.buttonToSettingsFragment.setOnClickListener {
             Navigation.findNavController(it).navigate(R.id.action_firstFragment_to_settingsFragment)
-            
             /*
                 Fragment.findNavController()
                 View.findNavController()
@@ -54,10 +67,75 @@ class FirstFragment : Fragment() {
              */
         }
 
-        view.findViewById<Button>(R.id.buttonToNavigationTest).setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
+        binding.buttonToNavigationViewBinding.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_viewBindingTestActivity)
         }
-        return view
+
+        binding.buttonToNavigationInDialogFragment.setOnClickListener {
+//            findNavController().navigate(R.id.action_firstFragment_to_navigationDialogFragment)
+            findNavController().navigate(R.id.action_firstFragment_to_my_dialog_fragment)
+        }
+
+        binding.buttonToSchemeActivity.setOnClickListener {
+            findNavController().navigate(R.id.action_firstFragment_to_testSchemeActivity)
+        }
+
+        binding.buttonToDynamicSchemeActivity.setOnClickListener {
+            findNavController().navigate(
+                R.id.action_firstFragment_to_testDynamicSchemeActivity,
+                bundleOf("userId" to "abcd1234")
+                )
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        println("FirstFragment onPause")
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        println("FirstFragment onAttach")
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        println("FirstFragment onActivityCreated")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        println("FirstFragment onDetach")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        println("FirstFragment onDestroyView")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        println("FirstFragment onDestroy")
+    }
+
+    override fun onAttachFragment(childFragment: Fragment) {
+        super.onAttachFragment(childFragment)
+        println("FirstFragment onAttachFragment")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        println("FirstFragment onResume")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        println("FirstFragment onStart")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        println("FirstFragment onStop")
     }
 
     companion object {

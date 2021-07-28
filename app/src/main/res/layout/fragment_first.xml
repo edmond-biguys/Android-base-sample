@@ -36,4 +36,36 @@
         android:text="navigate to navigation test"
         />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:id="@+id/buttonToNavigationViewBinding"
+        android:layout_marginTop="250dp"
+        android:text="navigate to viewBinding test"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonToNavigationInDialogFragment"
+        android:layout_marginTop="300dp"
+        android:text="navigate to navigation in dialogFragment"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonToSchemeActivity"
+        android:layout_marginTop="350dp"
+        android:text="navigate to scheme activity"
+        />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/buttonToDynamicSchemeActivity"
+        android:layout_marginTop="400dp"
+        android:text="navigate to dynamic scheme activity"
+        />
+
 </FrameLayout>
