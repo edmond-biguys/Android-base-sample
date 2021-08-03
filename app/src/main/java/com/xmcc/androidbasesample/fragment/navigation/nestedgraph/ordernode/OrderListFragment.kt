@@ -54,6 +54,15 @@ class OrderListFragment : BaseFragment() {
                     "orderId" to 10,
                     "orderCode" to "abcd"
             ))
+            //action_orderListFragment_to_orderDetailFragment
+//            OrderListFragmentDirections
+//            OrderDetailFragmentDirections
+
+            val directions = OrderListFragmentDirections.actionOrderListFragmentToOrderDetailFragment()
+            directions.orderId = 100
+            findNavController().navigate(directions)
+
+
             val controller = findNavController()
             println("backStack ${findNavController()}")
 
