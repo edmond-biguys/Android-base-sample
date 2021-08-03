@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_graph"
+    app:startDestination="@id/nestedGraphRootFragment">
+
+    <fragment
+        android:id="@+id/nestedGraphRootFragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.NestedGraphRootFragment"
+        android:label="fragment_nested_graph_root_list"
+        tools:layout="@layout/fragment_nested_graph_root_list" >
+        <action
+            android:id="@+id/action_nestedGraphRootFragment_to_orderListFragment"
+            app:destination="@id/nav_order" />
+        <action
+            android:id="@+id/action_nestedGraphRootFragment_to_userHomeFragment"
+            app:destination="@id/nav_user" />
+    </fragment>
+    <include app:graph = "@navigation/nested_order"/>
+
+    <navigation android:id="@+id/nav_user"
+        app:startDestination="@id/userHomeFragment">
+        <fragment
+            android:id="@+id/accountFragment"
+            android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.usernode.AccountFragment"
+            android:label="fragment_account"
+            tools:layout="@layout/fragment_account" />
+        <fragment
+            android:id="@+id/settingsFragment2"
+            android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.usernode.SettingsFragment"
+            android:label="fragment_settings"
+            tools:layout="@layout/fragment_settings">
+            <action
+                android:id="@+id/action_settingsFragment2_to_accountFragment"
+                app:destination="@id/accountFragment" />
+        </fragment>
+        <fragment
+            android:id="@+id/userHomeFragment"
+            android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.usernode.UserHomeFragment"
+            android:label="fragment_user_home"
+            tools:layout="@layout/fragment_user_home">
+            <action
+                android:id="@+id/action_userHomeFragment_to_settingsFragment2"
+                app:destination="@id/settingsFragment2" />
+        </fragment>
+    </navigation>
+    <action android:id="@+id/action_global_nestedGraphRootFragment"
+        app:destination="@id/nestedGraphRootFragment"/>
+</navigation>

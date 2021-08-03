@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.navigation.nestedgraph.ordernode.OrderListFragment">
+
+
+
+    <Button
+        android:id="@+id/buttonToDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="to detail"
+        android:textAllCaps="false"
+        />
+
+    <Button
+        android:id="@+id/buttonPopUp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="pop up"
+        android:textAllCaps="false"
+        />
+    <Button
+        android:id="@+id/buttonPopStack"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="144dp"
+        android:text="pop stack"
+        android:textAllCaps="false"
+        />
+
+</FrameLayout>

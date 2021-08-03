@@ -22,15 +22,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidBaseSample">
+        <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity"></activity>
         <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW"/>
-                <data android:host="example.com"
-                    android:scheme="https"
-                    />
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <data
+                    android:host="example.com"
+                    android:scheme="https" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity android:name=".fragment.navigation.TestSchemeActivity">
             <intent-filter tools:ignore="AppLinkUrlError">

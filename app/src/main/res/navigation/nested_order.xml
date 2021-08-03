@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_order"
+    app:startDestination="@id/orderListFragment">
+
+    <fragment
+        android:id="@+id/orderListFragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.ordernode.OrderListFragment"
+        android:label="fragment_order_list"
+        tools:layout="@layout/fragment_order_list">
+        <action
+            android:id="@+id/action_orderListFragment_to_orderDetailFragment"
+            app:destination="@id/orderDetailFragment" >
+            <argument
+                android:name="orderId"
+                app:argType="integer"
+                android:defaultValue="-1" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/orderDetailFragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.ordernode.OrderDetailFragment"
+        android:label="fragment_order_detail"
+        tools:layout="@layout/fragment_order_detail">
+        <action
+            android:id="@+id/action_orderDetailFragment_to_orderRatingFragment"
+            app:destination="@id/orderRatingFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/orderRatingFragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.nestedgraph.ordernode.OrderRatingFragment"
+        android:label="fragment_order_rating"
+        tools:layout="@layout/fragment_order_rating"
+        >
+        <action
+            android:id="@+id/orderRatingFragmentPop"
+            app:popUpTo="@id/orderListFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+
+
+</navigation>

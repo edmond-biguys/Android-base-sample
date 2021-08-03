@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
+import androidx.navigation.NavDeepLinkRequest
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
@@ -56,6 +58,12 @@ class FirstFragment : Fragment() {
 
         binding.buttonToNavigationTest.setOnClickListener {
             findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
+            val request = NavDeepLinkRequest.Builder
+                    .fromUri("".toUri())
+                    .build()
+            findNavController().navigate(request)
+            findNavController().navigateUp()
+            findNavController().popBackStack()
         }
 
         binding.buttonToSettingsFragment.setOnClickListener {
