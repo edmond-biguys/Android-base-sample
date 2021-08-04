@@ -8,14 +8,13 @@
     <action
         android:id="@+id/action_pop_to_first_fragment"
         app:popUpTo="@id/nav_graph"
-        app:popUpToInclusive="true"
-        />
+        app:popUpToInclusive="true" />
 
     <fragment
         android:id="@+id/firstFragment"
         android:name="com.xmcc.androidbasesample.fragment.navigation.FirstFragment"
         android:label="fragment_first"
-        tools:layout="@layout/fragment_first" >
+        tools:layout="@layout/fragment_first">
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/secondFragment" />
@@ -45,7 +44,7 @@
         android:id="@+id/secondFragment"
         android:name="com.xmcc.androidbasesample.fragment.navigation.SecondFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second" >
+        tools:layout="@layout/fragment_second">
         <action
             android:id="@+id/action_secondFragment_to_firstFragment"
             app:destination="@id/firstFragment" />
@@ -66,12 +65,10 @@
 
     <dialog
         android:id="@+id/my_dialog_fragment"
-        android:name="com.xmcc.androidbasesample.fragment.navigation.NavigationDialogFragment"
-        >
+        android:name="com.xmcc.androidbasesample.fragment.navigation.NavigationDialogFragment">
         <action
             android:id="@+id/myDialogAction"
-            app:destination="@+id/destinationNameXXX"
-            />
+            app:destination="@+id/destinationNameXXX" />
 
     </dialog>
     <fragment
@@ -92,9 +89,9 @@
         app:action="android.intent.action.VIEW"
         app:dataPattern="https://example.com?userId={userId}"
         app:targetPackage="${applicationId}"
-        tools:layout="@layout/activity_test_dynamic_scheme" >
-    <argument android:name="userId"
-        app:argType="string"
-        />
+        tools:layout="@layout/activity_test_dynamic_scheme">
+        <argument
+            android:name="userId"
+            app:argType="string" />
     </activity>
 </navigation>

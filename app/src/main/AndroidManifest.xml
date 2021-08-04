@@ -22,11 +22,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AndroidBaseSample">
-        <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity"></activity>
+        <activity
+            android:name=".fragment.navigation.deeplink.DeepLinkActivity"
+            android:label="@string/title_activity_deep_link"
+            tools:ignore="AppLinkUrlError"
+            android:theme="@style/Theme.AndroidBaseSample.NoActionBar" >
+        </activity>
+        <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity" />
         <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
             <intent-filter tools:ignore="AppLinkUrlError">
                 <action android:name="android.intent.action.VIEW" />
-
                 <data
                     android:host="example.com"
                     android:scheme="https" />
@@ -46,7 +51,15 @@
             </intent-filter>
         </activity>
         <activity android:name=".viewbindingtest.ViewBindingInAdapterActivity" />
-        <activity android:name=".viewbindingtest.ViewBindingTestActivity" />
+        <activity android:name=".viewbindingtest.ViewBindingTestActivity" >
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:host="abcd.com"
+                    android:scheme="https"
+                     />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".fragment.navigation.TestNavigationActivity"
             android:label="@string/title_activity_test_navigation" />
@@ -55,7 +68,9 @@
             android:theme="@style/Animation2" />
         <activity
             android:name=".fragment.navigation.FragmentNavigationUseActivity"
-            android:theme="@style/Animation" />
+            android:theme="@style/Animation" >
+            <nav-graph android:value="@navigation/nav_deeplink"/>
+        </activity>
 
         <service
             android:name=".device.bluetooth.BluetoothService"
@@ -83,6 +98,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <receiver android:name=".BootReceiver">

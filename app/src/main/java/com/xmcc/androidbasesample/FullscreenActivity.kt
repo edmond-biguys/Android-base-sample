@@ -13,6 +13,7 @@ import android.widget.TextView
 import com.xmcc.androidbasesample.device.bluetooth.BlueToothActivity
 import com.xmcc.androidbasesample.fragment.navigation.FragmentNavigationUseActivity
 import com.xmcc.androidbasesample.fragment.navigation.TestJumpTimeActivity
+import com.xmcc.androidbasesample.fragment.navigation.deeplink.DeepLinkActivity
 import com.xmcc.androidbasesample.fragment.navigation.nestedgraph.NestedGraphActivity
 import kotlinx.android.synthetic.main.activity_fullscreen.*
 
@@ -111,6 +112,10 @@ class FullscreenActivity : AppCompatActivity() {
 
         buttonJumpToNestedGraph.setOnClickListener {
             startActivity(Intent(this, NestedGraphActivity::class.java))
+        }
+
+        buttonJumpToDeepLink.setOnClickListener {
+            startActivity(Intent(this, DeepLinkActivity::class.java))
         }
     }
 

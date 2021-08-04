@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_deeplink"
+    app:startDestination="@id/first2Fragment">
+
+    <fragment
+        android:id="@+id/first2Fragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.deeplink.First2Fragment"
+        android:label="First2Fragment" >
+        <action
+            android:id="@+id/action_first2Fragment_to_second2Fragment"
+            app:destination="@id/second2Fragment" />
+        <deepLink
+            app:uri="test.abc"
+            app:action="android.intent.action.VIEW"
+            app:mimeType="type/subtype"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/second2Fragment"
+        android:name="com.xmcc.androidbasesample.fragment.navigation.deeplink.Second2Fragment"
+        android:label="Second2Fragment" >
+        <deepLink
+            app:uri="second.abc"
+            app:action="android.intent.action.VIEW"
+            app:mimeType="type/subtype"
+            />
+    </fragment>
+</navigation>

@@ -57,13 +57,14 @@ class FirstFragment : Fragment() {
         }
 
         binding.buttonToNavigationTest.setOnClickListener {
-            findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
+//            findNavController().navigate(R.id.action_firstFragment_to_testNavigationActivity)
             val request = NavDeepLinkRequest.Builder
-                    .fromUri("".toUri())
+                    .fromUri("https://abcd.com".toUri())
+                    .setAction("android.intent.action.VIEW")
                     .build()
             findNavController().navigate(request)
-            findNavController().navigateUp()
-            findNavController().popBackStack()
+//            findNavController().navigateUp()
+//            findNavController().popBackStack()
         }
 
         binding.buttonToSettingsFragment.setOnClickListener {
