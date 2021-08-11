@@ -5,6 +5,8 @@ plugins {
     id 'androidx.navigation.safeargs'
 }
 
+//apply from: rootProject.file('config.gradle')
+
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
     buildToolsVersion rootProject.ext.buildToolsVersion
@@ -51,23 +53,21 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.appcompat:appcompat:${rootProject.ext.appcompat}"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.ver.kotlin_stdlib"
+    implementation "androidx.appcompat:appcompat:$rootProject.ext.ver.appcompat_ver"
     implementation project(path: ':permission')
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.3.5'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.3.5'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.preference:preference:1.1.1'
-    implementation 'com.google.android.material:material:1.3.0'
-    implementation 'androidx.navigation:navigation-fragment:2.3.5'
-    implementation 'androidx.navigation:navigation-ui:2.3.5'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-    implementation 'com.orhanobut:logger:2.2.0'
-    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.ver.constraintlayout"
+    implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ext.ver.navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ext.ver.navigation"
+    implementation "androidx.legacy:$rootProject.ext.ver.legacy_support"
+    implementation "androidx.preference:preference-ktx:$rootProject.ext.ver.preference_ktx"
+    implementation "com.google.android.material:material:$rootProject.ext.ver.google_material"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.ver.lifecycle_livedata"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.ver.lifecycle_viewmodel"
+    implementation "androidx.recyclerview:recyclerview:$rootProject.ext.ver.recyclerview"
+    testImplementation "junit:junit:$rootProject.ext.ver.junit"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.ver.ext_junit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.ver.espresso_core"
+    implementation "com.orhanobut:logger:$rootProject.ext.ver.logger"
+    implementation "com.google.code.gson:gson:$rootProject.ext.ver.gson"
 }

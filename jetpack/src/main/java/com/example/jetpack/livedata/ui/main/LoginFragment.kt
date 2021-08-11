@@ -25,11 +25,30 @@ class LoginFragment : Fragment() {
         return inflater.inflate(R.layout.login_fragment, container, false)
     }
 
+    /*
+    1. victory
+2.battle without honor
+3.pacific rim
+4.she is my sin
+5.he is a pirate
+
+1、liberators
+2、Requiem For A Dream-钢琴曲
+3、Flight Of The Silverbird
+4、Last Reunion
+5、Shadowfall
+6、Becoming a Legend
+7、Archangel
+8、Mind Heist
+9、Brotherhood
+10、SkyWorld
+     */
+
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(activity!!).get(LoginViewModel::class.java)
         viewModel.liveData.observe(this, Observer {
-            println("observe in fragment login result is $it")
+            //println("observe in fragment login result is $it")
         })
 
         buttonLogin.setOnClickListener {
