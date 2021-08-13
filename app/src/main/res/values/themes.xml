@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.AndroidBaseSample" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="Theme.Xmcc" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryDark">@color/purple_700</item>
@@ -8,9 +8,9 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.AndroidBaseSample.Fullscreen" parent="Theme.AndroidBaseSample">
+    <style name="Theme.Xmcc.Fullscreen" parent="Theme.Xmcc">
         <item name="android:actionBarStyle">
-            @style/Widget.Theme.AndroidBaseSample.ActionBar.Fullscreen
+            @style/Widget.Theme.Xmcc.ActionBar.Fullscreen
         </item>
         <item name="android:windowActionBarOverlay">true</item>
         <item name="android:windowBackground">@null</item>
@@ -21,12 +21,17 @@
         <item name="fullscreenTextColor">@color/light_blue_A200</item>
     </style>
 
-    <style name="Theme.AndroidBaseSample.NoActionBar">
+    <style name="Theme.Xmcc.NoActionBar" parent="Theme.MaterialComponents">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="colorPrimary">@color/light_blue_600</item>
+        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorAccent">@color/teal_200</item>
+
     </style>
 
-    <style name="Theme.AndroidBaseSample.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.Xmcc.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
-    <style name="Theme.AndroidBaseSample.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.Xmcc.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

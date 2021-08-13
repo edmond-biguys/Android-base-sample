@@ -1,116 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.xmcc.androidbasesample">
+xmlns:tools="http://schemas.android.com/tools"
+package="com.xmcc.androidbasesample">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
+<uses-feature
+    android:name="android.hardware.bluetooth_le"
+    android:required="true" />
 
-    <application
-        android:name=".App"
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+<application
+    android:name=".App"
+    android:allowBackup="true"
+    android:icon="@drawable/ic_compose_landing_roadmap"
+    android:label="@string/app_name"
+    android:roundIcon="@mipmap/ic_launcher_round"
+    android:supportsRtl="true"
+    android:theme="@style/Theme.Xmcc.NoActionBar">
+
+
+    <activity
+        android:name="com.cym.home.ui.MainActivity"
+        android:exported="true"
+
+        >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+
+    </activity>
+
+    <activity
+        android:name=".fragment.navigation.deeplink.DeepLinkActivity"
+        android:label="@string/title_activity_deep_link"
+        tools:ignore="AppLinkUrlError"
+        android:theme="@style/Theme.Xmcc.NoActionBar"></activity>
+    <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity" />
+    <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
+        <intent-filter tools:ignore="AppLinkUrlError">
+            <action android:name="android.intent.action.VIEW" />
+            <data
+                android:host="example.com"
+                android:scheme="https" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+    <activity android:name=".fragment.navigation.TestSchemeActivity">
+        <intent-filter tools:ignore="AppLinkUrlError">
+            <action android:name="android.intent.action.VIEW" />
+
+            <data
+                android:host="example.com"
+                android:scheme="https" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+    </activity>
+    <activity android:name=".viewbindingtest.ViewBindingInAdapterActivity" />
+    <activity android:name=".viewbindingtest.ViewBindingTestActivity">
+        <intent-filter tools:ignore="AppLinkUrlError">
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <data
+                android:host="abcd.com"
+                android:scheme="https" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".fragment.navigation.TestNavigationActivity"
+        android:label="@string/title_activity_test_navigation" />
+    <activity
+        android:name=".fragment.navigation.TestJumpTimeActivity"
+        android:theme="@style/Animation2" />
+    <activity
+        android:name=".fragment.navigation.FragmentNavigationUseActivity"
+        android:theme="@style/Animation">
+        <nav-graph android:value="@navigation/nav_deeplink" />
+    </activity>
+
+    <service
+        android:name=".device.bluetooth.BluetoothService"
+        android:enabled="true"
+        android:exported="true" />
+
+    <activity android:name=".device.bluetooth.BlueToothActivity" />
+    <activity
+        android:name=".FullscreenActivity"
+        android:configChanges="orientation|keyboardHidden|screenSize"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidBaseSample">
-        <activity
-            android:name=".fragment.navigation.deeplink.DeepLinkActivity"
-            android:label="@string/title_activity_deep_link"
-            tools:ignore="AppLinkUrlError"
-            android:theme="@style/Theme.AndroidBaseSample.NoActionBar" >
-        </activity>
-        <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity" />
-        <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
-            <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW" />
-                <data
-                    android:host="example.com"
-                    android:scheme="https" />
+        android:theme="@style/Theme.Xmcc.Fullscreen">
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".fragment.navigation.TestSchemeActivity">
-            <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW" />
+    </activity>
+    <activity
+        android:name=".home.HomeActivity"
+        android:label="@string/title_activity_home"
+        android:theme="@style/Theme.Xmcc.NoActionBar">
 
-                <data
-                    android:host="example.com"
-                    android:scheme="https" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".viewbindingtest.ViewBindingInAdapterActivity" />
-        <activity android:name=".viewbindingtest.ViewBindingTestActivity" >
-            <intent-filter tools:ignore="AppLinkUrlError">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <data android:host="abcd.com"
-                    android:scheme="https"
-                     />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".fragment.navigation.TestNavigationActivity"
-            android:label="@string/title_activity_test_navigation" />
-        <activity
-            android:name=".fragment.navigation.TestJumpTimeActivity"
-            android:theme="@style/Animation2" />
-        <activity
-            android:name=".fragment.navigation.FragmentNavigationUseActivity"
-            android:theme="@style/Animation" >
-            <nav-graph android:value="@navigation/nav_deeplink"/>
-        </activity>
+    </activity>
 
-        <service
-            android:name=".device.bluetooth.BluetoothService"
-            android:enabled="true"
-            android:exported="true" />
+    <receiver android:name=".BootReceiver">
+        <intent-filter>
+            <action android:name="android.intent.action.PACKAGE_ADDED" />
+            <action android:name="android.intent.action.PACKAGE_REMOVED" />
+            <action android:name="android.intent.action.BOOT_COMPLETED" />
+            <action android:name="android.intent.action.REBOOT" />
 
-        <activity android:name=".device.bluetooth.BlueToothActivity" />
-        <activity
-            android:name=".FullscreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_name"
-            android:theme="@style/Theme.AndroidBaseSample.Fullscreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".home.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.AndroidBaseSample.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
-
-        <receiver android:name=".BootReceiver">
-            <intent-filter>
-                <action android:name="android.intent.action.PACKAGE_ADDED" />
-                <action android:name="android.intent.action.PACKAGE_REMOVED" />
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.REBOOT" />
-
-                <data android:scheme="package" />
-            </intent-filter>
-        </receiver>
-    </application>
+            <data android:scheme="package" />
+        </intent-filter>
+    </receiver>
+</application>
 
 </manifest>

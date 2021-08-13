@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/navigation_home">
+
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.cym.home.ui.fragment.HomeFragment"
+        android:label="HomeFragment" >
+    </fragment>
+    <fragment
+        android:id="@+id/navigation_trip"
+        android:name="com.cym.trip.fragment.TripListFragment"
+        android:label="trip_list_fragment"
+        tools:layout="@layout/trip_list_fragment" />
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.cym.user.fragment.UserFragment"
+        android:label="user_fragment"
+        tools:layout="@layout/user_fragment" />
+</navigation>

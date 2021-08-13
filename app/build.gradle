@@ -65,6 +65,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.ext.ver.lifecycle_livedata"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.ver.lifecycle_viewmodel"
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.ver.recyclerview"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation "junit:junit:$rootProject.ext.ver.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.ver.ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.ver.espresso_core"
