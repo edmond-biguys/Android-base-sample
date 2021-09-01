@@ -1,12 +1,17 @@
 package com.cym.home.ui
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Bundle
-import android.view.Window
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cym.base.BaseActivity
+import com.githang.statusbar.StatusBarCompat
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.ActivityMain2Binding
 
@@ -15,7 +20,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        StatusBarCompat.setStatusBarColor(this, resources.getColor(R.color.light_blue_A401))
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -34,5 +39,20 @@ class MainActivity : BaseActivity() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.homeFragmentContainerView) as NavHostFragment
         binding.bottomNavigationViewHome.setupWithNavController(navHostFragment.findNavController())
 
+
+        checkPermission()
+
+        val bug01 = Bug01()
+        bug01.bug01()
+
+    }
+
+    private fun checkPermission() {
+        val granted = ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        if (granted != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0x0011
+            )
+        }
     }
 }

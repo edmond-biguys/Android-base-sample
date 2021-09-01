@@ -4,4 +4,8 @@ import androidx.lifecycle.ViewModel
 
 class HomeViewModel : ViewModel() {
     // TODO: Implement the ViewModel
+
+    fun sensor() {
+        //val sensorManager =
+    }
 }

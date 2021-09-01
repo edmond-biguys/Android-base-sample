@@ -4,13 +4,14 @@ import android.annotation.SuppressLint
 import android.content.Context
 import com.google.gson.Gson
 import com.xmcc.androidbasesample.App
+import com.xmcc.androidbasesample.AppLike
 
 /**
  * Created by caoj on 2021/5/30.
  */
 object SpBluetooth {
 
-    val sp = App.getApp().getSharedPreferences("config", Context.MODE_PRIVATE)
+    val sp = AppLike.getApp().application.getSharedPreferences("config", Context.MODE_PRIVATE)
     fun initMacList() {
         val edit = sp.edit()
         var macBean = BluetoothMacList()
