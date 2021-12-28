@@ -3,3 +3,4 @@ include ':ktsample'
 include ':permission'
 include ':app'
 rootProject.name = "AndroidBaseSample"
+include ':compose-view'
