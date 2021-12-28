@@ -13,7 +13,6 @@ import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.FragmentFirstBinding
-import kotlinx.android.synthetic.main.fragment_first.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

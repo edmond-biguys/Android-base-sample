@@ -10,12 +10,13 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.xmcc.androidbasesample.databinding.ActivityFullscreenBinding
 import com.xmcc.androidbasesample.device.bluetooth.BlueToothActivity
 import com.xmcc.androidbasesample.fragment.navigation.FragmentNavigationUseActivity
 import com.xmcc.androidbasesample.fragment.navigation.TestJumpTimeActivity
 import com.xmcc.androidbasesample.fragment.navigation.deeplink.DeepLinkActivity
 import com.xmcc.androidbasesample.fragment.navigation.nestedgraph.NestedGraphActivity
-import kotlinx.android.synthetic.main.activity_fullscreen.*
+
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -67,11 +68,15 @@ class FullscreenActivity : AppCompatActivity() {
         false
     }
 
+    lateinit var binding: ActivityFullscreenBinding
     @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_fullscreen)
+        binding = ActivityFullscreenBinding.inflate(layoutInflater)
+        binding.root
+        setContentView(binding.root)
+//        setContentView(R.layout.activity_fullscreen)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         isFullscreen = true
@@ -96,27 +101,30 @@ class FullscreenActivity : AppCompatActivity() {
 
 
     private fun setListener() {
-        buttonJumpToNavigationTest.setOnClickListener {
-            println("caoj full activity click ${System.currentTimeMillis()}")
-            startActivity(Intent(this, FragmentNavigationUseActivity::class.java))
-            overridePendingTransition(0, 0)
-        }
-        buttonJumpToBluetoothTest.setOnClickListener {
-            startActivity(Intent(this, BlueToothActivity::class.java))
+        with(binding) {
+            buttonJumpToNavigationTest.setOnClickListener {
+                println("caoj full activity click ${System.currentTimeMillis()}")
+                startActivity(Intent(this@FullscreenActivity, FragmentNavigationUseActivity::class.java))
+                overridePendingTransition(0, 0)
+            }
+            buttonJumpToBluetoothTest.setOnClickListener {
+                startActivity(Intent(this@FullscreenActivity, BlueToothActivity::class.java))
+            }
+
+            buttonJumpToTestJumpTimeTest.setOnClickListener {
+                startActivity(Intent(this@FullscreenActivity, TestJumpTimeActivity::class.java))
+                overridePendingTransition(0, 0)
+            }
+
+            buttonJumpToNestedGraph.setOnClickListener {
+                startActivity(Intent(this@FullscreenActivity, NestedGraphActivity::class.java))
+            }
+
+            buttonJumpToDeepLink.setOnClickListener {
+                startActivity(Intent(this@FullscreenActivity, DeepLinkActivity::class.java))
+            }
         }
 
-        buttonJumpToTestJumpTimeTest.setOnClickListener {
-            startActivity(Intent(this, TestJumpTimeActivity::class.java))
-            overridePendingTransition(0, 0)
-        }
-
-        buttonJumpToNestedGraph.setOnClickListener {
-            startActivity(Intent(this, NestedGraphActivity::class.java))
-        }
-
-        buttonJumpToDeepLink.setOnClickListener {
-            startActivity(Intent(this, DeepLinkActivity::class.java))
-        }
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {

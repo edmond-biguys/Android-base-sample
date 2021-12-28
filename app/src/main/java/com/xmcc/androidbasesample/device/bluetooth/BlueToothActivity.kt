@@ -15,24 +15,25 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.orhanobut.logger.Logger
-import com.xmcc.androidbasesample.R
-import kotlinx.android.synthetic.main.activity_blue_tooth.*
-import kotlinx.android.synthetic.main.item_main.*
+import com.xmcc.androidbasesample.databinding.ActivityBlueToothBinding
 import kotlin.math.max
 
 
 
 class BlueToothActivity : AppCompatActivity() {
+    lateinit var binding: ActivityBlueToothBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_blue_tooth)
+
+        binding = ActivityBlueToothBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val permissions = arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.ACCESS_FINE_LOCATION)
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                 permissions, 123)
         }
-        buttonStartDiscovery.setOnClickListener {
+        binding.buttonStartDiscovery.setOnClickListener {
             val discoverableIntent = Intent(BluetoothAdapter.ACTION_REQUEST_DISCOVERABLE).apply {
                 putExtra(BluetoothAdapter.EXTRA_DISCOVERABLE_DURATION, 150)
             }
@@ -41,9 +42,9 @@ class BlueToothActivity : AppCompatActivity() {
 
 
         val listener = View.OnClickListener { v -> v.id }
-        buttonStartDiscovery.setOnClickListener(listener)
-        buttonStartDiscovery.setOnClickListener {  }
-        buttonStartDiscovery.setOnClickListener({})
+        binding.buttonStartDiscovery.setOnClickListener(listener)
+        binding.buttonStartDiscovery.setOnClickListener {  }
+        binding.buttonStartDiscovery.setOnClickListener({})
 
 
         Thread {

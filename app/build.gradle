@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+//    id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs'
 }
 
@@ -19,14 +19,34 @@ android {
         versionName rootProject.ext.appVersionName
 
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+
+        ndk {
+            abiFilters 'armeabi-v7a'
+        }
     }
     flavorDimensions "version"
-    productFlavors {
-        free {
-            applicationIdSuffix ".free"
+//    productFlavors {
+//        free {
+//            applicationIdSuffix ".free"
+//        }
+//        pro {
+//            applicationIdSuffix ".pro"
+//        }
+//    }
+
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'key01'
+            keyPassword 'keystore01'
+            storeFile file("./keystore/keystore_sample")
+            storePassword "keystore01"
         }
-        pro {
-            applicationIdSuffix ".pro"
+
+        debugConfig {
+            keyAlias 'key01'
+            keyPassword 'keystore01'
+            storeFile file("./keystore/keystore_sample")
+            storePassword "keystore01"
         }
     }
 
@@ -34,10 +54,11 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.releaseConfig
         }
-        debug {
-            applicationIdSuffix ".debug"
-        }
+//        debug {
+//            applicationIdSuffix ".debug"
+//        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -49,6 +70,16 @@ android {
     viewBinding {
         enabled = true
     }
+
+    buildFeatures {
+        // Enables Jetpack Compose for this module
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.0.5'
+    }
+
+
 }
 
 dependencies {
@@ -71,4 +102,58 @@ dependencies {
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.ver.espresso_core"
     implementation "com.orhanobut:logger:$rootProject.ext.ver.logger"
     implementation "com.google.code.gson:gson:$rootProject.ext.ver.gson"
+    implementation "com.githang:status-bar-compat:0.7"
+
+    //tinker
+    implementation "com.android.support:multidex:1.0.3"
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.23'
+    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+
+
+    //tinker
+
+
+    //workManager
+    def work_version = "2.7.1"
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
+    // Kotlin + coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    // optional - RxJava2 support
+    implementation "androidx.work:work-rxjava2:$work_version"
+    // optional - GCMNetworkManager support
+    implementation "androidx.work:work-gcm:$work_version"
+    // optional - Test helpers
+    androidTestImplementation "androidx.work:work-testing:$work_version"
+    // optional - Multiprocess support
+    implementation "androidx.work:work-multiprocess:$work_version"
+    //workManager
+
+
+    //compose
+    implementation("androidx.activity:activity-compose:1.4.0")
+    implementation("androidx.compose.ui:ui:1.0.5")
+    // Tooling support (Previews, etc.)
+    implementation("androidx.compose.ui:ui-tooling:1.0.5")
+    // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
+    implementation("androidx.compose.foundation:foundation:1.0.5")
+    // Material Design
+    implementation("androidx.compose.material:material:1.0.5")
+    // Material design icons
+    implementation("androidx.compose.material:material-icons-core:1.0.5")
+    implementation("androidx.compose.material:material-icons-extended:1.0.5")
+    // Integration with observables
+    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.5")
+
+    //类似与以前的support库
+    api "com.google.accompanist:accompanist-insets:0.21.3-beta"
+    api "com.google.accompanist:accompanist-insets-ui:0.21.3-beta"
+    api "com.google.accompanist:accompanist-systemuicontroller:0.21.3-beta"
+
+    // UI Tests
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
+    //compose
+
 }

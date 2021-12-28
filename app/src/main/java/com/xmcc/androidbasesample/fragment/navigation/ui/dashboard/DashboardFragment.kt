@@ -4,30 +4,28 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.xmcc.androidbasesample.R
-import kotlinx.android.synthetic.main.fragment_dashboard.*
+import com.xmcc.androidbasesample.databinding.FragmentDashboardBinding
 
 class DashboardFragment : Fragment() {
 
     private lateinit var dashboardViewModel: DashboardViewModel
 
+    lateinit var binding: FragmentDashboardBinding
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         dashboardViewModel =
                 ViewModelProvider(this).get(DashboardViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        val textView: TextView = root.findViewById(R.id.text_dashboard)
-        text_dashboard.text = ""
-        dashboardViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
+        binding = FragmentDashboardBinding.inflate(layoutInflater, container, false)
+
+        binding.textDashboard.text = ""
+        dashboardViewModel.text.observe(viewLifecycleOwner, {
+            binding.textDashboard.text = it
         })
-        return root
+        return binding.root
     }
 }

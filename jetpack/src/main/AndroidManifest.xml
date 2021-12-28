@@ -5,7 +5,8 @@
     <application>
         <activity android:name=".livedata.LoginActivity"></activity>
 
-        <receiver android:name=".livedata.CameraViewWidget">
+        <receiver android:name=".livedata.CameraViewWidget"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

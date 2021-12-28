@@ -26,7 +26,7 @@ class UserFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity()).get(UserViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.startWorkManager(requireContext())
     }
 
 }

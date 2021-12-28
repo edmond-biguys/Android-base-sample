@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.Observer
-import com.example.jetpack.R
-import kotlinx.android.synthetic.main.login_fragment.*
+import com.example.jetpack.databinding.LoginFragmentBinding
+
 
 class LoginFragment : Fragment() {
 
@@ -18,11 +18,13 @@ class LoginFragment : Fragment() {
 
     private lateinit var viewModel: LoginViewModel
 
+    private lateinit var binding: LoginFragmentBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(R.layout.login_fragment, container, false)
+        binding = LoginFragmentBinding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     /*
@@ -51,8 +53,8 @@ class LoginFragment : Fragment() {
             //println("observe in fragment login result is $it")
         })
 
-        buttonLogin.setOnClickListener {
-            viewModel.login(editTextTextPersonName.text.toString(), editTextNumberPassword.text.toString())
+        binding.buttonLogin.setOnClickListener {
+            viewModel.login(binding.editTextTextPersonName.text.toString(), binding.editTextNumberPassword.text.toString())
         }
     }
 

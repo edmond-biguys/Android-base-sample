@@ -1,7 +1,6 @@
 package com.xmcc.androidbasesample.fragment.navigation.deeplink
 
 import android.app.PendingIntent
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,13 +9,12 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavDeepLinkBuilder
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import com.xmcc.androidbasesample.R
-import kotlinx.android.synthetic.main.fragment_second2.*
+import com.xmcc.androidbasesample.databinding.FragmentSecond2Binding
 import java.util.*
 
 /**
@@ -24,12 +22,14 @@ import java.util.*
  */
 class Second2Fragment : Fragment() {
 
+    lateinit var binding: FragmentSecond2Binding
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_second2, container, false)
+        binding = FragmentSecond2Binding.inflate(layoutInflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,19 +39,19 @@ class Second2Fragment : Fragment() {
             findNavController().popBackStack()
         }
 
-        buttonSendNotification.setOnClickListener {
+        binding.buttonSendNotification.setOnClickListener {
             val controller = Navigation.findNavController(it)
             val clazz = Class.forName(NavController::class.java.name)
             val method = clazz.getDeclaredMethod("getBackStack")
-            println("caoj ${(method.invoke(controller) as Deque<NavBackStackEntry>).size}")
+            println("caoj ${(method.invoke(controller) as Deque<*>).size}")
 
             val pendingIntent: PendingIntent = NavDeepLinkBuilder(requireActivity())
                 .setGraph(R.navigation.nav_deeplink)
                 .setDestination(R.id.second2Fragment)
                 .createPendingIntent()
 
-            val intent = Intent(requireContext(), DeepLinkActivity::class.java)
-            val pendingIntent1: PendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, 0)
+//            val intent = Intent(requireContext(), DeepLinkActivity::class.java)
+//            val pendingIntent1: PendingIntent = PendingIntent.getActivity(requireContext(), 0, intent, 0)
 
             val builder = NotificationCompat.Builder(requireContext(), "CHANNEL_ID")
                 .setSmallIcon(R.drawable.ic_notifications_black_24dp)
