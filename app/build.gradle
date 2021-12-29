@@ -157,5 +157,6 @@ dependencies {
     //compose
 
 //    implementation("com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha01")
+//    implementation 'com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha02'
 
 }
