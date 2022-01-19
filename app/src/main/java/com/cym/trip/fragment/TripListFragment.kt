@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
+import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
 import com.xmcc.androidbasesample.databinding.TripListFragmentBinding
 
@@ -42,7 +43,7 @@ class TripListFragment : Fragment() {
         with(binding) {
             recyclerView01.layoutManager = LinearLayoutManager(requireContext())
 
-            val itemDataList = mutableListOf("WorkManager", "viewBinding")
+            val itemDataList = mutableListOf("WorkManager", "viewBinding", "garden")
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
         }
@@ -68,6 +69,7 @@ class TripListFragment : Fragment() {
                 println("click ${items[position]}")
                 when {
                     items[position] == "WorkManager" -> navigateWorkManagerSampleView(context)
+                    items[position] == "garden" -> navigateGardenActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -76,6 +78,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateWorkManagerSampleView(context: Context) {
             context.startActivity(Intent(context, WorkManagerSampleActivity::class.java))
+        }
+
+        private fun navigateGardenActivity(context: Context) {
+            context.startActivity(Intent(context, GardenActivity::class.java))
         }
 
         override fun getItemCount(): Int {

@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 package="com.xmcc.androidbasesample">
 
@@ -123,6 +124,9 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.jetpack.workmanager.WorkManagerSampleActivity"
+        android:exported="false" />
+
+    <activity android:name="com.cym.sunflower.GardenActivity"
         android:exported="false"
         />
 
@@ -149,4 +153,3 @@ package="com.xmcc.androidbasesample">
 </application>
 
 </manifest>
-

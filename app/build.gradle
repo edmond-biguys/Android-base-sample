@@ -87,6 +87,8 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.ver.kotlin_stdlib"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.ver.appcompat_ver"
     implementation project(path: ':permission')
+//    implementation project(path: ':compose-view')
+    implementation("com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha06")
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.ext.ver.constraintlayout"
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.ext.ver.navigation"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.ext.ver.navigation"
@@ -151,6 +153,10 @@ dependencies {
     implementation "com.google.accompanist:accompanist-insets:0.21.3-beta"
     implementation "com.google.accompanist:accompanist-insets-ui:0.21.3-beta"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.21.3-beta"
+
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+
+    implementation ("androidx.navigation:navigation-compose:2.4.0-rc01")
 
     // UI Tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
