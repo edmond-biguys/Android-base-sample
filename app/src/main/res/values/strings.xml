@@ -43,4 +43,6 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="coordinator_observer" translatable="false">观察者</string>
+    <string name="coordinator_observed" translatable="false">被观察者</string>
 </resources>

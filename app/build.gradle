@@ -74,10 +74,14 @@ android {
     buildFeatures {
         // Enables Jetpack Compose for this module
         compose true
+        
+        dataBinding true
     }
     composeOptions {
         kotlinCompilerExtensionVersion '1.0.5'
     }
+
+
 
 
 }

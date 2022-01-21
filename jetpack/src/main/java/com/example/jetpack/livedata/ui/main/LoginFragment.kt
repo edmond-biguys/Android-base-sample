@@ -46,10 +46,10 @@ class LoginFragment : Fragment() {
 10、SkyWorld
      */
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(activity!!).get(LoginViewModel::class.java)
-        viewModel.liveData.observe(this, Observer {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity()).get(LoginViewModel::class.java)
+        viewModel.liveData.observe(viewLifecycleOwner, Observer {
             //println("observe in fragment login result is $it")
         })
 

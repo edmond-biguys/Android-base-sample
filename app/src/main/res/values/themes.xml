@@ -27,7 +27,7 @@
 
 
         <item name="colorPrimary">@color/light_blue_600</item>
-        <item name="colorPrimaryDark">@color/purple_700</item>
+        <item name="colorPrimaryDark">@color/light_blue_900</item>
         <item name="colorAccent">@color/teal_200</item>
 
     </style>

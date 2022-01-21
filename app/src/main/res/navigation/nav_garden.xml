@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_garden"
+    app:startDestination="@id/home_view_pager"
+    >
+
+    <fragment android:id="@+id/home_view_pager"
+        android:name="com.cym.sunflower.HomeViewPagerFragment"
+        tools:layout = "@layout/fragment_home_view_pager"
+        >
+        <action android:id="@+id/home_view_pager_to_plant_detail"
+            app:destination="@id/plant_detail"
+            />
+    </fragment>
+
+    <fragment android:id="@+id/plant_detail"
+        android:name="com.cym.sunflower.PlantDetailFragment"
+        tools:layout="@layout/fragment_plant_detail"
+        >
+
+    </fragment>
+</navigation>

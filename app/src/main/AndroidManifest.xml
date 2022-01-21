@@ -126,8 +126,13 @@ package="com.xmcc.androidbasesample">
         android:name="com.cym.jetpack.workmanager.WorkManagerSampleActivity"
         android:exported="false" />
 
-    <activity android:name="com.cym.sunflower.GardenActivity"
+    <activity
+        android:name="com.cym.sunflower.GardenActivity"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.CoordinatorLayoutSampleActivity"
         android:exported="false"
+
         />
 
     <provider
