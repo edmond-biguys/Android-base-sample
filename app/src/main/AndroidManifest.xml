@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?><manifest xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 package="com.xmcc.androidbasesample">
 
@@ -131,6 +130,24 @@ package="com.xmcc.androidbasesample">
         android:exported="false" />
     <activity
         android:name="com.cym.androidx.coordinatorlayout.CoordinatorLayoutSampleActivity"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.AboutBehaviorActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.AboutAppBarLayoutActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.AboutCollapsingToolbarLayout"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.housedecoration.HouseDecorationListActivity"
         android:exported="false"
 
         />

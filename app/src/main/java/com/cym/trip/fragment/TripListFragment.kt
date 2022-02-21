@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cym.androidx.coordinatorlayout.CoordinatorLayoutSampleActivity
+import com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
 import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
@@ -46,7 +47,7 @@ class TripListFragment : Fragment() {
 
             val itemDataList = mutableListOf(
                 "WorkManager", "ViewBinding", "Garden",
-                "CoordinatorLayout"
+                "CoordinatorLayout", "ViewPager2"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -75,6 +76,7 @@ class TripListFragment : Fragment() {
                     items[position] == "WorkManager" -> navigateWorkManagerSampleView(context)
                     items[position] == "Garden" -> navigateGardenActivity(context)
                     items[position] == "CoordinatorLayout" -> navigateCoordinatorLayoutSampleActivity(context)
+                    items[position] == "ViewPager2" -> navigateViewPager2Activity(context)
                     else -> println("do nothing")
                 }
 
@@ -91,6 +93,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateCoordinatorLayoutSampleActivity(context: Context) {
             context.startActivity(Intent(context, CoordinatorLayoutSampleActivity::class.java))
+        }
+
+        private fun navigateViewPager2Activity(context: Context) {
+            context.startActivity(Intent(context, ViewPager2SampleActivity::class.java))
         }
 
         override fun getItemCount(): Int {

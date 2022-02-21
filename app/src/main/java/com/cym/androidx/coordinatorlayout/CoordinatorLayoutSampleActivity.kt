@@ -1,57 +1,33 @@
 package com.cym.androidx.coordinatorlayout
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
-import android.view.View
-import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.xmcc.androidbasesample.databinding.ActivityCoordinatorLayoutSampleBinding
 
 class CoordinatorLayoutSampleActivity : AppCompatActivity() {
 
-
-    private lateinit var binding: ActivityCoordinatorLayoutSampleBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityCoordinatorLayoutSampleBinding.inflate(layoutInflater)
+        val binding = ActivityCoordinatorLayoutSampleBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initClickListener(binding)
+    }
 
-//        CoordinatorLayout
-//        AppBarLayout
-//        CollapsingToolbarLayout
-
+    private fun initClickListener(binding: ActivityCoordinatorLayoutSampleBinding) {
         with(binding) {
-            buttonObserved.setOnClickListener {  }
-            buttonObserved.setOnTouchListener { v, event ->
+            tvBehavior.setOnClickListener {
+                startActivity(Intent(this@CoordinatorLayoutSampleActivity, AboutBehaviorActivity::class.java))
+            }
 
-                when(event.action) {
-                    MotionEvent.ACTION_DOWN -> {
-                        lastX = event.rawX
-                        lastY = event.rawY
-                        return@setOnTouchListener true
-                    }
-                    MotionEvent.ACTION_MOVE -> {
-                        buttonMove(v, event)
-                        lastX = event.rawX
-                        lastY = event.rawY
-                        return@setOnTouchListener true
-                    }
-                    MotionEvent.ACTION_UP -> {
-                        v.performClick()
-                        println("edmond action up in child")
-                        return@setOnTouchListener true
-                    }
-                    else -> return@setOnTouchListener false
-                }
+            tvAppBarLayout.setOnClickListener {
+                startActivity(Intent(this@CoordinatorLayoutSampleActivity, AboutAppBarLayoutActivity::class.java))
+            }
+
+            tvCollapsingToolbarLayout.setOnClickListener {
+                startActivity(Intent(this@CoordinatorLayoutSampleActivity, AboutCollapsingToolbarLayout::class.java))
             }
         }
     }
-    private var lastX = 0f
-    private var lastY = 0f
-    private fun buttonMove(view: View, event: MotionEvent) {
-        view.x = view.x + event.rawX - lastX
-        view.y = view.y + event.rawY - lastY
-    }
+
 }

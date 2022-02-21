@@ -2,12 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.cym.user.fragment.UserFragment">
-
-    <ListView
-        android:id="@android:id/list"
+    android:layout_height="60dp">
+    <TextView
+        android:id="@+id/tv_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        tools:text="标题"
+        android:textSize="16sp"
+        android:paddingStart="16dp"
+        android:gravity="center_vertical"
+        android:layout_height="60dp"/>
 </FrameLayout>
