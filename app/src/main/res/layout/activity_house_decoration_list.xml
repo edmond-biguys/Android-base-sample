@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
     tools:context="com.cym.housedecoration.HouseDecorationListActivity">
 
-
-
-  <com.google.android.material.appbar.AppBarLayout
+  <androidx.appcompat.widget.Toolbar
+      android:id="@+id/toolbar"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content">
+      app:title="House Decoration"
+      android:background="@color/colorPrimary"
+      android:layout_height="?actionBarSize"/>
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"/>
-
-  </com.google.android.material.appbar.AppBarLayout>
-
-  <androidx.recyclerview.widget.RecyclerView
+  <com.google.android.material.tabs.TabLayout
+      android:id="@+id/tabLayout"
+      android:background="#586BD1"
+      app:tabTextColor="#cccccc"
+      app:tabSelectedTextColor="#FFFFFF"
       android:layout_width="match_parent"
-      android:layout_height="match_parent"/>
+      android:layout_height="wrap_content" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+  <androidx.viewpager2.widget.ViewPager2
+      android:id="@+id/viewPager2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

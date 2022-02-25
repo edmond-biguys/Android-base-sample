@@ -26,6 +26,7 @@ class ViewPager2SampleActivity : AppCompatActivity() {
         binding = ActivityViewpager2Binding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
         val adapter = MyFragmentStateAdapter(this)
         val fragments: MutableList<Fragment> = arrayListOf()
 
