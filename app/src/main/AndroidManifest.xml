@@ -149,7 +149,10 @@ package="com.xmcc.androidbasesample">
     <activity
         android:name="com.cym.housedecoration.HouseDecorationListActivity"
         android:exported="false"
-
+        />
+    <activity
+        android:name="com.cym.housedecoration.detail.DecorativeMaterialDetailActivity"
+        android:exported="false"
         />
 
     <provider

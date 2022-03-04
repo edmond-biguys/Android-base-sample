@@ -48,7 +48,7 @@
     <TextView
         android:id="@+id/text_view_price"
         style="@style/commonWrapText"
-        android:textColor="#ff3973"
+        android:textColor="@color/commom_red_ff3973"
         tools:text="总价：20.00"
         app:layout_constraintStart_toEndOf="@id/text_view_category"
         app:layout_constraintTop_toTopOf="@id/text_view_category"

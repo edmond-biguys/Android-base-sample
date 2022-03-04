@@ -1,14 +1,18 @@
 package com.cym.housedecoration
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.AdapterView
 import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cym.housedecoration.detail.DecorativeMaterialDetailActivity
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.ActivityHouseDecorationListBinding
@@ -35,10 +39,16 @@ class HouseDecorationListActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
             tablayout.text = viewModel.TAB_DATAS[position]
         }.attach()
 
+        binding.toolbar.setOnMenuItemClickListener {
+            println("action add1111")
+            startActivity(Intent(this, DecorativeMaterialDetailActivity::class.java))
+            return@setOnMenuItemClickListener true
+        }
+
     }
 
     class MyFragmentStateAdapter(fragmentActivity: FragmentActivity):
-        FragmentStateAdapter(fragmentActivity) {
+        FragmentStateAdapter(fragmentActivity){
         var fragmentLists: MutableList<Fragment> = arrayListOf()
         override fun getItemCount(): Int = fragmentLists.size
 
@@ -55,6 +65,7 @@ class HouseDecorationListActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
         when(item.itemId) {
             R.id.actionAdd -> {
                 println("action add")
+                startActivity(Intent(this, DecorativeMaterialDetailActivity::class.java))
             }
         }
 

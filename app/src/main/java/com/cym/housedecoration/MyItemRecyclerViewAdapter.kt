@@ -40,6 +40,7 @@ class MyItemRecyclerViewAdapter(
         holder.price.text = "总价：${item.getTotalPriceDisplay()}"
         holder.desc.text = item.desc
         holder.date.text = item.getCreateDateDisplay()
+
     }
 
     override fun getItemCount(): Int = values.size
