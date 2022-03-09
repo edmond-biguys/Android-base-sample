@@ -15,6 +15,10 @@ class DecorativeMaterialDetailViewModel(application: Application): AndroidViewMo
         decorativeMaterialdetailLiveData.value = list[Random().nextInt(list.size - 1)]
     }
 
+    fun getTestData(): String {
+        return "test01"
+    }
+
 
 
 }

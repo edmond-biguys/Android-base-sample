@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import com.cym.common.widget.EditDialog
 import com.cym.housedecoration.bean.DecorativeMaterial
 import com.xmcc.androidbasesample.databinding.ActivityDecorativeMaterialDetailBinding
 
@@ -35,7 +36,10 @@ class DecorativeMaterialDetailActivity : AppCompatActivity() {
             println("to payed list")
         }
 
-        binding.textViewDesc.setOnClickListener {  }
+        binding.textViewDesc.setOnClickListener {
+            println("desc 111")
+            EditDialog.newInstance().show(supportFragmentManager, "desc")
+        }
 
         binding.textViewPrice.setOnClickListener {  }
 

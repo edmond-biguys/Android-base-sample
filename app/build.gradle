@@ -18,7 +18,8 @@ android {
         versionCode rootProject.ext.appVersionCode
         versionName rootProject.ext.appVersionName
 
-        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+//        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
             abiFilters 'armeabi-v7a'
@@ -82,7 +83,9 @@ android {
         kotlinCompilerExtensionVersion '1.0.5'
     }
 
-
+    testOptions {
+        unitTests.includeAndroidResources = true
+    }
 
 
 }
@@ -104,7 +107,6 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.ext.ver.lifecycle_viewmodel"
     implementation "androidx.recyclerview:recyclerview:$rootProject.ext.ver.recyclerview"
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation "junit:junit:$rootProject.ext.ver.junit"
     androidTestImplementation "androidx.test.ext:junit:$rootProject.ext.ver.ext_junit"
     androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.ext.ver.espresso_core"
     implementation "com.orhanobut:logger:$rootProject.ext.ver.logger"
@@ -169,5 +171,18 @@ dependencies {
 
 //    implementation("com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha01")
 //    implementation 'com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha02'
+
+
+    //test
+    testImplementation "junit:junit:$rootProject.ext.ver.junit"
+    // Optional -- Robolectric environment
+    testImplementation 'androidx.test:core:1.4.0'
+    // Optional -- Mockito framework
+    testImplementation 'org.mockito:mockito-core:2.19.0'
+
+    testImplementation "org.robolectric:robolectric:3.8"
+    androidTestImplementation "com.android.support.test:runner:1.0.2"
+    androidTestImplementation "com.android.support.test:rules:1.0.2"
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 }
