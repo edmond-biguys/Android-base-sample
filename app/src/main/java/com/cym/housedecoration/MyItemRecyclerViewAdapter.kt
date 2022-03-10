@@ -1,12 +1,15 @@
 package com.cym.housedecoration
 
 import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.cym.housedecoration.bean.DecorativeMaterial
+import com.cym.housedecoration.detail.DecorativeMaterialDetailActivity
 
 import com.cym.housedecoration.placeholder.PlaceholderContent.PlaceholderItem
 import com.xmcc.androidbasesample.databinding.FragmentDecorationItemBinding
@@ -16,6 +19,7 @@ import com.xmcc.androidbasesample.databinding.FragmentDecorationItemBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
+    private val context: Context,
     private val values: List<DecorativeMaterial>
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
@@ -40,6 +44,13 @@ class MyItemRecyclerViewAdapter(
         holder.price.text = "总价：${item.getTotalPriceDisplay()}"
         holder.desc.text = item.desc
         holder.date.text = item.getCreateDateDisplay()
+
+        holder.itemView.setOnClickListener {
+            println("caoj click itemView $position")
+            DecorativeMaterialDetailActivity.startDecorativeMaterialDetailActivity(
+                context, Intent(context, DecorativeMaterialDetailActivity::class.java)
+            )
+        }
 
     }
 

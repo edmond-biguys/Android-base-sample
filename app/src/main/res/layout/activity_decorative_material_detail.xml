@@ -63,8 +63,18 @@
         >
 
       <TextView
+          android:id="@+id/text_view_name"
+          style="@style/commonWrapText"
+          android:layout_width="match_parent"
+          android:minHeight="48dp"
+          android:gravity="center_vertical"
+          tools:text="这里是商品名称"
+          />
+
+      <TextView
           android:id="@+id/text_view_desc"
           style="@style/commonWrapText"
+          android:layout_width="match_parent"
           android:minHeight="48dp"
           android:gravity="center_vertical"
           tools:text="这里是商品描述。"
@@ -73,6 +83,7 @@
       <TextView
           android:id="@+id/text_view_price"
           style="@style/commonWrapText"
+          android:layout_width="match_parent"
           android:gravity="center_vertical"
           android:minHeight="48dp"
           android:textColor="@color/commom_red_ff3973"
@@ -109,6 +120,7 @@
       <TextView
           android:id="@+id/text_view_category"
           style="@style/commonWrapText"
+          android:layout_width="match_parent"
           android:gravity="center_vertical"
           android:minHeight="48dp"
           tools:text="分类：窗户"
@@ -117,6 +129,7 @@
       <TextView
           android:id="@+id/text_view_date"
           style="@style/commonWrapText"
+          android:layout_width="match_parent"
           android:gravity="center_vertical"
           android:minHeight="48dp"
           tools:text="2022-02-28"
@@ -125,6 +138,7 @@
       <TextView
           android:id="@+id/text_view_tips"
           style="@style/commonWrapText"
+          android:layout_width="match_parent"
           android:gravity="center_vertical"
           android:minHeight="48dp"
           tools:text="这里是备注"

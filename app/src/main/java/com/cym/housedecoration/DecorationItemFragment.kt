@@ -33,11 +33,12 @@ class DecorationItemFragment : Fragment() {
         binding = FragmentDecorationItemListBinding.inflate(inflater, container, false)
 
         with(binding) {
-            list.layoutManager = LinearLayoutManager(context)
+            list.layoutManager = LinearLayoutManager(requireContext())
             list.addItemDecoration(
                 com.cym.housedecoration.DividerItemDecoration(
-                    context, com.cym.housedecoration.DividerItemDecoration.VERTICAL_LIST))
-            list.adapter = MyItemRecyclerViewAdapter(viewModel.getDecorativeMaterialList())
+                    requireContext(), com.cym.housedecoration.DividerItemDecoration.VERTICAL_LIST))
+            list.adapter = MyItemRecyclerViewAdapter(requireContext(), viewModel.getDecorativeMaterialList())
+
         }
         return binding.root
     }

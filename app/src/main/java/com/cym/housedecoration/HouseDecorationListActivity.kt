@@ -4,11 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
+import androidx.activity.result.ActivityResultRegistry
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityOptionsCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -17,7 +17,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.ActivityHouseDecorationListBinding
 
-class HouseDecorationListActivity : AppCompatActivity(), Toolbar.OnMenuItemClickListener {
+class HouseDecorationListActivity : AppCompatActivity() {
     private lateinit var binding: ActivityHouseDecorationListBinding
     private val viewModel by viewModels<HouseDecorationListViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,11 +39,32 @@ class HouseDecorationListActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
             tablayout.text = viewModel.TAB_DATAS[position]
         }.attach()
 
+
+        val startForResult = object : ActivityResultRegistry() {
+            override fun <I : Any?, O : Any?> onLaunch(
+                requestCode: Int,
+                contract: ActivityResultContract<I, O>,
+                input: I,
+                options: ActivityOptionsCompat?
+            ) {
+                println("caoj onLaunch")
+            }
+
+        }
+
         binding.toolbar.setOnMenuItemClickListener {
-            println("action add1111")
-            startActivity(Intent(this, DecorativeMaterialDetailActivity::class.java))
+            DecorativeMaterialDetailActivity.startDecorativeMaterialDetailActivity(
+                this, Intent(this, DecorativeMaterialDetailActivity::class.java)
+            )
+//            registerForActivityResult()
+//            registerForActivityResult(ActivityResultContracts.GetContent, startForResult)
+//            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//                println("caoj resultCode ${it.resultCode}")
+//            }.launch(Intent(this, DecorativeMaterialDetailActivity::class.java))
             return@setOnMenuItemClickListener true
         }
+        
+
 
     }
 
@@ -59,17 +80,6 @@ class HouseDecorationListActivity : AppCompatActivity(), Toolbar.OnMenuItemClick
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_house_decoration, menu)
         return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onMenuItemClick(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.actionAdd -> {
-                println("action add")
-                startActivity(Intent(this, DecorativeMaterialDetailActivity::class.java))
-            }
-        }
-
-        return true
     }
 
 
