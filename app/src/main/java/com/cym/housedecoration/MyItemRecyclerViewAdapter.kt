@@ -1,6 +1,7 @@
 package com.cym.housedecoration
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.recyclerview.widget.RecyclerView
@@ -8,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContract
+import androidx.fragment.app.FragmentActivity
 import com.cym.housedecoration.bean.DecorativeMaterial
 import com.cym.housedecoration.detail.DecorativeMaterialDetailActivity
 
 import com.cym.housedecoration.placeholder.PlaceholderContent.PlaceholderItem
+import com.tencent.bugly.proguard.I
+import com.tencent.bugly.proguard.O
 import com.xmcc.androidbasesample.databinding.FragmentDecorationItemBinding
 
 /**
@@ -20,7 +26,8 @@ import com.xmcc.androidbasesample.databinding.FragmentDecorationItemBinding
  */
 class MyItemRecyclerViewAdapter(
     private val context: Context,
-    private val values: List<DecorativeMaterial>
+    private val values: List<DecorativeMaterial>,
+    private val launcher: ActivityResultLauncher<String>? = null
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -45,11 +52,12 @@ class MyItemRecyclerViewAdapter(
         holder.desc.text = item.desc
         holder.date.text = item.getCreateDateDisplay()
 
+
+
+
         holder.itemView.setOnClickListener {
             println("caoj click itemView $position")
-            DecorativeMaterialDetailActivity.startDecorativeMaterialDetailActivity(
-                context, Intent(context, DecorativeMaterialDetailActivity::class.java)
-            )
+            launcher?.launch("abc")
         }
 
     }

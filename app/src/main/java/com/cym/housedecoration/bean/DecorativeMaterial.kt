@@ -7,8 +7,8 @@ import java.util.*
 
 data class DecorativeMaterial(
     var id: Int = 0,
-    var title: String,
-    var category: String, //装修材料、物品的分类
+    var title: String = "",
+    var category: String = "", //装修材料、物品的分类
     var unitPrice: BigDecimal = 0.0.toBigDecimal(),  //单价
     var totalPayedPrice: BigDecimal = 0.0.toBigDecimal(), //已支付的金额
     var payedPriceList: List<String> = mutableListOf(), //已支付的过程钱列表
@@ -24,9 +24,9 @@ data class DecorativeMaterial(
 
     var count: Double = 1.0, //购买数量，按实际单位来
     var unit: String = "", //购买物品计价单位
-    var createDate: Date, //购买日期
+    var createDate: Date = Date(), //购买日期
     var isAlternative: Boolean = false, //备选
-    var desc: String,   //商品描述
+    var desc: String = "",   //商品描述
     var imageIcon: String = "", //购买商品缩略图
     var imageDetailList: List<String> = mutableListOf(), //商品相关图片
 ) {

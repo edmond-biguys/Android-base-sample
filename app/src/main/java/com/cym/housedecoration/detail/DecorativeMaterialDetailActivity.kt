@@ -62,7 +62,11 @@ class DecorativeMaterialDetailActivity : AppCompatActivity() {
 
             textViewTips.setOnClickListener {  }
 
-            buttonAdd.setOnClickListener {  }
+            buttonSave.setOnClickListener {
+                //todo 保存数据
+                setResult(RESULT_OK)
+                finish()
+            }
         }
     }
 
@@ -91,7 +95,6 @@ class DecorativeMaterialDetailActivity : AppCompatActivity() {
             binding.textViewDate.text = getCreateDateDisplay() //"2021-11-06"
             binding.textViewTips.text = ""
         }
-
     }
 
     companion object {

@@ -146,13 +146,13 @@
 
 
       <Button
-          android:id="@+id/button_add"
+          android:id="@+id/button_save"
           android:layout_width="match_parent"
           android:layout_height="66dp"
           android:layout_marginTop="30dp"
           android:textSize="14sp"
           android:textColor="@color/white"
-          android:text="添 加"
+          android:text="保 存"
           />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
