@@ -1,12 +1,16 @@
 package com.cym.housedecoration
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.cym.housedecoration.detail.DecorativeMaterialDetailActivity
 import com.cym.housedecoration.detail.GoToDetailResultContract
 import com.google.android.material.tabs.TabLayoutMediator
 import com.xmcc.androidbasesample.R
@@ -18,6 +22,10 @@ class HouseDecorationListActivity : AppCompatActivity() {
 
     private val goToDetailLauncher = registerForActivityResult(GoToDetailResultContract()) {
         println("output $it")
+    }
+
+    private val goToDetailLauncher02 = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,6 +50,9 @@ class HouseDecorationListActivity : AppCompatActivity() {
 
         binding.toolbar.setOnMenuItemClickListener {
             goToDetailLauncher.launch("input01")
+
+            val intent = Intent(this, DecorativeMaterialDetailActivity::class.java)
+            goToDetailLauncher02.launch(intent)
             return@setOnMenuItemClickListener true
         }
     }

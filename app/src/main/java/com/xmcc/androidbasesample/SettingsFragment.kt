@@ -13,7 +13,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val signature = findPreference<EditTextPreference>("signature")
         println("caoj signature.text ${signature?.text}")
         val listener: Preference.OnPreferenceClickListener = Preference.OnPreferenceClickListener {
-            println("caoj 1111 ${it.key} ${it.sharedPreferences.getString(it.key, "abc")}")
+            println("caoj 1111 ${it.key} ${it.sharedPreferences?.getString(it.key, "abc")}")
             true
         }
         signature?.onPreferenceClickListener = listener

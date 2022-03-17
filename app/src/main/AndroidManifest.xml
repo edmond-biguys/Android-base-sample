@@ -148,12 +148,16 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.housedecoration.HouseDecorationListActivity"
-        android:exported="false"
-        />
+        android:exported="false" />
     <activity
         android:name="com.cym.housedecoration.detail.DecorativeMaterialDetailActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.housedecoration.detail.payedhistory.PayedHostoryActivity"
         android:exported="false"
-        />
+        android:label="@string/title_activity_payed_hostory"
+        android:theme="@style/Theme.Xmcc.NoActionBar.NoActionBar" />
 
     <provider
         android:name="androidx.core.content.FileProvider"
@@ -178,3 +182,4 @@ package="com.xmcc.androidbasesample">
 </application>
 
 </manifest>
+

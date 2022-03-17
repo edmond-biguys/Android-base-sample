@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
 //    id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs'
+    id 'kotlin-parcelize'
 }
 
 //apply from: rootProject.file('config.gradle')
@@ -80,7 +81,7 @@ android {
         viewBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.0.5'
+        kotlinCompilerExtensionVersion '1.1.1'
     }
 
     testOptions {
@@ -92,7 +93,7 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$rootProject.ext.ver.kotlin_stdlib"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
     implementation "androidx.appcompat:appcompat:$rootProject.ext.ver.appcompat_ver"
     implementation project(path: ':permission')
 //    implementation project(path: ':compose-view')
@@ -142,31 +143,31 @@ dependencies {
 
     //compose
     implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:1.0.5")
+    implementation("androidx.compose.ui:ui:1.1.1")
     // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:1.0.5")
+    implementation("androidx.compose.ui:ui-tooling:1.1.1")
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation("androidx.compose.foundation:foundation:1.0.5")
+    implementation("androidx.compose.foundation:foundation:1.1.1")
     // Material Design
-    implementation("androidx.compose.material:material:1.0.5")
+    implementation("androidx.compose.material:material:1.1.1")
     // Material design icons
-    implementation("androidx.compose.material:material-icons-core:1.0.5")
-    implementation("androidx.compose.material:material-icons-extended:1.0.5")
+    implementation("androidx.compose.material:material-icons-core:1.1.1")
+    implementation("androidx.compose.material:material-icons-extended:1.1.1")
     // Integration with observables
-    implementation("androidx.compose.runtime:runtime-livedata:1.0.5")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.0.5")
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
+    implementation("androidx.compose.runtime:runtime-rxjava2:1.1.1")
 
     //类似与以前的support库
     implementation "com.google.accompanist:accompanist-insets:0.21.3-beta"
     implementation "com.google.accompanist:accompanist-insets-ui:0.21.3-beta"
     implementation "com.google.accompanist:accompanist-systemuicontroller:0.21.3-beta"
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
 
-    implementation ("androidx.navigation:navigation-compose:2.4.0-rc01")
+    implementation ("androidx.navigation:navigation-compose:2.5.0-alpha03")
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.0.5")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
     //compose
 
 //    implementation("com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha01")

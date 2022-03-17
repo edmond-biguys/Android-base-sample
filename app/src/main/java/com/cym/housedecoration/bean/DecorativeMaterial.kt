@@ -1,10 +1,13 @@
 package com.cym.housedecoration.bean
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Parcelize
 data class DecorativeMaterial(
     var id: Int = 0,
     var title: String = "",
@@ -29,7 +32,7 @@ data class DecorativeMaterial(
     var desc: String = "",   //商品描述
     var imageIcon: String = "", //购买商品缩略图
     var imageDetailList: List<String> = mutableListOf(), //商品相关图片
-) {
+): Parcelable {
     private val decimalFormat = DecimalFormat("0.00")
     fun getTotalPriceDisplay(): String {
         return decimalFormat.format(totalPrice)
