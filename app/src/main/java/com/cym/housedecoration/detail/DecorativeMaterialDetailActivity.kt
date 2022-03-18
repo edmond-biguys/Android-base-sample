@@ -6,15 +6,28 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.cym.common.widget.EditDialog
 import com.cym.housedecoration.bean.DecorativeMaterial
+import com.cym.housedecoration.detail.payedhistory.PayedHostoryActivity
 import com.xmcc.androidbasesample.databinding.ActivityDecorativeMaterialDetailBinding
 
 class DecorativeMaterialDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDecorativeMaterialDetailBinding
     private val viewModel by viewModels<DecorativeMaterialDetailViewModel>()
+
+    private val gotoPayedHostoryActivity =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()) {
+                result ->
+        println("resultCode: ${result.resultCode == RESULT_OK} ")
+        println("resultData " +
+                "${result.data?.getIntExtra(
+                    ActivityResultContracts.StartActivityForResult.EXTRA_ACTIVITY_OPTIONS_BUNDLE,
+                    0)}")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +67,16 @@ class DecorativeMaterialDetailActivity : AppCompatActivity() {
                 }
             }
 
-            textViewPayed.setOnClickListener {  }
+            textViewPayed.setOnClickListener {
+                println("goto payed hostory view")
+                val intent =
+                    Intent(this@DecorativeMaterialDetailActivity, PayedHostoryActivity::class.java)
+                val bundle = Bundle()
+                bundle.putInt(
+                    ActivityResultContracts.StartActivityForResult.EXTRA_ACTIVITY_OPTIONS_BUNDLE, 987)
+                intent.putExtras(bundle)
+                gotoPayedHostoryActivity.launch(intent)
+            }
 
             textViewCategory.setOnClickListener {  }
 
