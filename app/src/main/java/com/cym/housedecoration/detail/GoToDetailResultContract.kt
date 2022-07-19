@@ -6,6 +6,9 @@ import androidx.activity.result.contract.ActivityResultContract
 import androidx.appcompat.app.AppCompatActivity
 import com.cym.housedecoration.bean.DecorativeMaterial
 
+/*
+这是自己定义的ActivityResultContract
+ */
 class GoToDetailResultContract: ActivityResultContract<String, DecorativeMaterial>() {
     override fun createIntent(context: Context, input: String): Intent {
         val intent = Intent(context, DecorativeMaterialDetailActivity::class.java)
