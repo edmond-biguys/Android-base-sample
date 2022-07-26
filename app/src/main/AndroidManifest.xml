@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 package="com.xmcc.androidbasesample">
@@ -163,7 +162,30 @@ package="com.xmcc.androidbasesample">
     <activity
         android:name="com.cym.androidx.coordinatorlayout.LifecycleTestActivity"
         android:exported="false"
+        />
 
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.startmode.AActivity"
+        android:exported="false"
+        android:launchMode="standard"
+        />
+
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.startmode.BActivity"
+        android:exported="false"
+        android:launchMode="singleTop"
+        />
+
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.startmode.CActivity"
+        android:exported="false"
+        android:launchMode="singleTask"
+        />
+
+    <activity
+        android:name="com.cym.androidx.coordinatorlayout.startmode.DActivity"
+        android:exported="false"
+        android:launchMode="singleInstance"
         />
 
     <provider
