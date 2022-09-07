@@ -15,6 +15,8 @@ import com.cym.androidx.coordinatorlayout.LifecycleTestActivity
 import com.cym.androidx.coordinatorlayout.startmode.AActivity
 import com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
+import com.cym.sample.persistence.DataStoreActivity
+import com.cym.sample.persistence.PersistenceSampleActivity
 import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
 import com.xmcc.androidbasesample.databinding.TripListFragmentBinding
@@ -49,7 +51,8 @@ class TripListFragment : Fragment() {
 
             val itemDataList = mutableListOf(
                 "WorkManager", "ViewBinding", "Garden",
-                "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode"
+                "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
+                "Persistence"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -81,6 +84,7 @@ class TripListFragment : Fragment() {
                     items[position] == "ViewPager2" -> navigateViewPager2Activity(context)
                     items[position] == "Lifecycle Test" -> navigateLifecycleActivity(context)
                     items[position] == "Start Mode" -> navigateStartModelActivity(context)
+                    items[position] == "Persistence" -> navigatePersistenceActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -109,6 +113,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateStartModelActivity(context: Context) {
             context.startActivity(Intent(context, AActivity::class.java))
+        }
+
+        private fun navigatePersistenceActivity(context: Context) {
+            context.startActivity(Intent(context, PersistenceSampleActivity::class.java))
         }
 
         override fun getItemCount(): Int {

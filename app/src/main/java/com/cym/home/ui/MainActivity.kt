@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cym.base.BaseActivity
+import com.cym.utilities.logi
 import com.githang.statusbar.StatusBarCompat
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.ActivityMain2Binding
@@ -20,6 +21,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        logi("MainActivity onCreate")
         StatusBarCompat.setStatusBarColor(this, resources.getColor(R.color.light_blue_A401))
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -45,6 +47,11 @@ class MainActivity : BaseActivity() {
         val bug01 = Bug01()
         bug01.bug01()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        logi("MainActivity onDestroy")
     }
 
     private fun checkPermission() {

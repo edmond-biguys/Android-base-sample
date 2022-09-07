@@ -15,7 +15,7 @@ class DActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
-        logi("D onCreate")
+        logi("D onCreate ${this.taskId}")
         setClickListener()
     }
 

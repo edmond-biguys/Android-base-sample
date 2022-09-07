@@ -14,7 +14,7 @@ class CActivity : AppCompatActivity() {
         binding = ActivityCactivityBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-        logi("C onCreate")
+        logi("C onCreate ${this.taskId}")
         setClickListener()
     }
 

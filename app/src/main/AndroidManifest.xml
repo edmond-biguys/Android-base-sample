@@ -161,31 +161,35 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.androidx.coordinatorlayout.LifecycleTestActivity"
-        android:exported="false"
-        />
+        android:exported="false" />
 
     <activity
         android:name="com.cym.androidx.coordinatorlayout.startmode.AActivity"
         android:exported="false"
-        android:launchMode="standard"
-        />
+        android:launchMode="standard" />
 
     <activity
         android:name="com.cym.androidx.coordinatorlayout.startmode.BActivity"
         android:exported="false"
-        android:launchMode="singleTop"
-        />
+        android:launchMode="singleTop" />
 
     <activity
         android:name="com.cym.androidx.coordinatorlayout.startmode.CActivity"
         android:exported="false"
-        android:launchMode="singleTask"
-        />
+        android:launchMode="singleTask" />
 
     <activity
         android:name="com.cym.androidx.coordinatorlayout.startmode.DActivity"
         android:exported="false"
-        android:launchMode="singleInstance"
+        android:launchMode="singleInstance" />
+
+    <activity
+        android:name="com.cym.sample.persistence.DataStoreActivity"
+        android:exported="false"
+        />
+    <activity
+        android:name="com.cym.sample.persistence.PersistenceSampleActivity"
+        android:exported="false"
         />
 
     <provider
