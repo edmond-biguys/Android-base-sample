@@ -27,6 +27,7 @@ class DataStoreActivity : AppCompatActivity() {
             setContentView(it.root)
         }
         clickListenerInit()
+
     }
 
     private fun clickListenerInit() {
