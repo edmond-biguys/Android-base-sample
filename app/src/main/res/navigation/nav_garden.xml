@@ -5,7 +5,17 @@
     android:id="@+id/nav_garden"
     app:startDestination="@id/home_view_pager"
     >
-
+<!--
+    使用参考：
+    https://github.com/edmond-biguys/beja-coder/blob/main/jetpack/navigation.md
+ navigation
+ 1. 导入navigation库，androidx.navigation.xxx
+ 2. 新建navigation xml文件（这个文件为导航图），nav_xxx.xml
+ 3. 将导航图添加的宿主页面的布局文件（xml布局文件）中，
+ 3. 使用navigation做页面跳转，使用如下
+    Navigation.findNavController(view).navigate(R.id.home_view_pager_to_plant_detail)
+ 4.
+ -->
     <fragment android:id="@+id/home_view_pager"
         android:name="com.cym.sunflower.HomeViewPagerFragment"
         tools:layout = "@layout/fragment_home_view_pager"

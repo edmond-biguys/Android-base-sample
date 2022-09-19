@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import com.cym.sunflower.viewmodels.HomeViewPagerViewModel
 import com.xmcc.androidbasesample.R
 
@@ -27,6 +28,7 @@ class HomeViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(HomeViewPagerViewModel::class.java)
+        Navigation.findNavController(view).navigate(R.id.home_view_pager_to_plant_detail)
     }
 
 }
