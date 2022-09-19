@@ -185,10 +185,13 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.sample.persistence.DataStoreActivity"
-        android:exported="false"
-        />
+        android:exported="false" />
     <activity
         android:name="com.cym.sample.persistence.PersistenceSampleActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.sample.flow.FlowSampleActivity"
         android:exported="false"
         />
 

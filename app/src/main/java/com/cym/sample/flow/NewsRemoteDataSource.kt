@@ -5,18 +5,30 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
 class NewsRemoteDataSource(
-    private val newsApi: NewsApi,
+    private val newsApi: NewsApi? = null,
     private val refreshIntervalMs: Long = 5000
 ) {
 
-    val lastestNews: Flow<List<String>> = flow {
+    val lastNews: Flow<List<String>> = flow {
         while (true) {
-            val lastestNews = newsApi.fetchLastestNews()
-            emit(lastestNews)
+
+            if (newsApi == null) {
+                val list = mutableListOf<String>()
+                list.add("a")
+                list.add("ab")
+                list.add("c")
+                emit(list)
+                delay(refreshIntervalMs)
+                continue
+            }
+
+            val lastNews = newsApi.fetchLastestNews()
+            emit(lastNews)
+
+
             delay(refreshIntervalMs)
         }
     }
-
 }
 
 interface NewsApi {

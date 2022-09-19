@@ -1,16 +1,14 @@
 package com.cym.sample.flow
 
 import com.cym.utilities.logi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 
 class NewsRepository(
-    private val newsRemoteDataSource: NewsRemoteDataSource,
-
+    newsRemoteDataSource: NewsRemoteDataSource,
 ) {
-    val favoriteLastestNews: Flow<List<String>> =
-        newsRemoteDataSource.lastestNews
+    val favoriteLastNews: Flow<List<String>> =
+        newsRemoteDataSource.lastNews
             .map { news -> news.filter { item -> isFavoriteNews(item) } }
             .onEach {
                 news -> saveInCache(news)
@@ -20,6 +18,20 @@ class NewsRepository(
         logi("filter news $news")
         return news.startsWith("a")
     }
+
+    private val flowTest: Flow<String> = flow {
+        while (true) {
+            emit("abc")
+            delay(5000)
+        }
+    }
+
+    suspend fun testFlow() {
+        flowTest.withIndex().collect{
+            println("index ${it.index} value ${it.value}")
+        }
+    }
+
     private fun saveInCache(news: List<String>) {
         logi("cache $news")
     }
