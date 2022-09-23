@@ -4,6 +4,7 @@ plugins {
 //    id 'kotlin-android-extensions'
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
+    id "ua.eshepelyuk.ManifestClasspath"
 }
 
 //apply from: rootProject.file('config.gradle')

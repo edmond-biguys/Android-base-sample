@@ -1,12 +1,11 @@
 package com.xmcc.androidbasesample
 
-import android.app.Application
-import android.content.Intent
-import com.orhanobut.logger.AndroidLogAdapter
-import com.orhanobut.logger.Logger
+import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import com.tencent.tinker.loader.app.TinkerApplication
 import com.tencent.tinker.loader.shareutil.ShareConstants
-import com.xmcc.androidbasesample.device.bluetooth.BluetoothService
 
 
 /**
@@ -16,3 +15,4 @@ class App: TinkerApplication(ShareConstants.TINKER_ENABLE_ALL, "com.xmcc.android
     "com.tencent.tinker.loader.TinkerLoader", false) {
 
 }
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings2")

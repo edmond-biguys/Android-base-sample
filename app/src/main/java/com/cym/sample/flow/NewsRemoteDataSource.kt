@@ -10,24 +10,24 @@ class NewsRemoteDataSource(
 ) {
 
     val lastNews: Flow<List<String>> = flow {
-        while (true) {
-
-            if (newsApi == null) {
-                val list = mutableListOf<String>()
-                list.add("a")
-                list.add("ab")
-                list.add("c")
-                emit(list)
-                delay(refreshIntervalMs)
-                continue
-            }
-
-            val lastNews = newsApi.fetchLastestNews()
-            emit(lastNews)
-
-
-            delay(refreshIntervalMs)
-        }
+//        while (true) {
+//
+//            if (newsApi == null) {
+//                val list = mutableListOf<String>()
+//                list.add("a")
+//                list.add("ab")
+//                list.add("c")
+//                emit(list)
+//                delay(refreshIntervalMs)
+//                continue
+//            }
+//
+//            val lastNews = newsApi.fetchLastestNews()
+//            emit(lastNews)
+//
+//
+//            delay(refreshIntervalMs)
+//        }
     }
 }
 

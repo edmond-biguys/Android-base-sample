@@ -53,7 +53,7 @@ class TripListFragment : Fragment() {
             val itemDataList = mutableListOf(
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
-                "Persistence", "FlowSample"
+                "Persistence", "FlowSample", "判断、选择题", "名词解释"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -87,6 +87,8 @@ class TripListFragment : Fragment() {
                     items[position] == "Start Mode" -> navigateStartModelActivity(context)
                     items[position] == "Persistence" -> navigatePersistenceActivity(context)
                     items[position] == "FlowSample" -> navigateFlowSampleActivity(context)
+                    items[position] == "判断、选择题" -> navigateQuestion1Activity(context)
+                    items[position] == "名词解释" -> navigateQuestion2Activity(context)
                     else -> println("do nothing")
                 }
 
@@ -123,6 +125,17 @@ class TripListFragment : Fragment() {
 
         private fun navigateFlowSampleActivity(context: Context) {
             context.startActivity(Intent(context, FlowSampleActivity::class.java))
+        }
+
+        private fun navigateQuestion1Activity(context: Context) {
+            val intent = Intent(context, FlowSampleActivity::class.java)
+            intent.putExtra("content", "q1")
+            context.startActivity(intent)
+        }
+        private fun navigateQuestion2Activity(context: Context) {
+            val intent = Intent(context, FlowSampleActivity::class.java)
+            intent.putExtra("content", "q2")
+            context.startActivity(intent)
         }
 
         override fun getItemCount(): Int {
