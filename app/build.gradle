@@ -5,6 +5,10 @@ plugins {
     id 'androidx.navigation.safeargs'
     id 'kotlin-parcelize'
     id "ua.eshepelyuk.ManifestClasspath"
+    //使用kotlin("kapt")这个时，会报这个错误 only id(String) method calls allowed in plugins {}，修改为下边的内容，就可以了
+    //kotlin("kapt") 为kotlin的写法，不是groovy语法
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 //apply from: rootProject.file('config.gradle')
@@ -185,6 +189,9 @@ dependencies {
     implementation('androidx.datastore:datastore-rxjava2:1.0.0')
     implementation('androidx.datastore:datastore-rxjava3:1.0.0')
 
+    //hilt
+    implementation('com.google.dagger:hilt-android:2.38.1')
+    kapt('com.google.dagger:hilt-android-compiler:2.38.1')
 
     //test
     testImplementation "junit:junit:$rootProject.ext.ver.junit"
@@ -197,5 +204,8 @@ dependencies {
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test:rules:1.0.2"
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
 
+kapt {
+    correctErrorTypes = true
 }

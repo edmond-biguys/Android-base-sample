@@ -23,6 +23,8 @@ buildscript {
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.tencent.bugly:tinker-support:1.2.3"
         classpath "gradle.plugin.ua.eshepelyuk:ManifestClasspath:1.0.0"
+        //hilt
+        classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
     }
 }
 

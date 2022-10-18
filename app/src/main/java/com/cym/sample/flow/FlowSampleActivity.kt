@@ -10,16 +10,19 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import com.cym.sample.flow.bean.AAndQ
 import com.cym.utilities.logi
+import com.xmcc.androidbasesample.App
 import com.xmcc.androidbasesample.dataStore
 import com.xmcc.androidbasesample.databinding.ActivityFlowSampleBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.lang.Exception
+import javax.inject.Inject
 
+//@AndroidEntryPoint
 class FlowSampleActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFlowSampleBinding
     private val viewModel by viewModels<LastNewsViewModel>()
@@ -29,10 +32,14 @@ class FlowSampleActivity : AppCompatActivity() {
 
     var index = 0
     var q: String = "q1"
+    var onlyYes: Boolean = false
+    var onlyPanduan: Boolean = false
+
+    //@Inject lateinit var app: App
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        logi("onCreate")
+        //logi("onCreate $app")
         binding = ActivityFlowSampleBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
@@ -40,6 +47,8 @@ class FlowSampleActivity : AppCompatActivity() {
         initListener()
 
         val tempQ = intent.getStringExtra("content")
+        onlyYes = intent.getBooleanExtra("onlyYes", false)
+        onlyPanduan = intent.getBooleanExtra("onlyPanduan", false)
         logi("$tempQ")
         if (tempQ != null) {
             q = tempQ
@@ -89,15 +98,14 @@ class FlowSampleActivity : AppCompatActivity() {
     private fun readNowCursor() {
         GlobalScope.launch {
             try {
-                val flow: Flow<Int> = dataStore.data.map { preferences ->
+                dataStore.data.map { preferences ->
                     logi("readNowCursor")
                     if (q == "q1") {
                         preferences[q1CursorKey] ?: 0
                     } else {
                         preferences[q2CursorKey] ?: 0
                     }
-                }
-                flow.collect {
+                }.collect {
                     logi("$it")
                     nowCursor = it
                 }
@@ -118,6 +126,11 @@ class FlowSampleActivity : AppCompatActivity() {
             }
         }
     }
+
+    //标准答案：是
+    //标准答案：否
+    private val answerYES = "标准答案：是"
+    private val answerNO = "标准答案：否"
 
     private fun readFileInfo(bufferedReader: BufferedReader, q: String = "") {
         var str: String? = ""
@@ -157,14 +170,35 @@ class FlowSampleActivity : AppCompatActivity() {
                     items.add(s)
                 }
 
-                if (isAnswer(s)) {
-                    answer = s
-                    //出现答案时，说明已经到这一题的最后了
-                    val aAndQ = AAndQ(
-                        title, items, answer
-                    )
-                    list.add(aAndQ)
+                if (q == "q1" && onlyYes) {
+                    if (isAnswer(s) && !s.contains(answerNO)) {
+                        answer = s
+                        //出现答案时，说明已经到这一题的最后了
+                        val aAndQ = AAndQ(
+                            title, items, answer
+                        )
+                        list.add(aAndQ)
+                    }
+                } else if (q == "q1" && onlyPanduan) {
+                    if (isAnswer(s) && s.contains(answerNO)) {
+                        answer = s
+                        //出现答案时，说明已经到这一题的最后了
+                        val aAndQ = AAndQ(
+                            title, items, answer
+                        )
+                        list.add(aAndQ)
+                    }
+                } else if (q == "q2") {
+                    if (isAnswer(s)) {
+                        answer = s
+                        //出现答案时，说明已经到这一题的最后了
+                        val aAndQ = AAndQ(
+                            title, items, answer
+                        )
+                        list.add(aAndQ)
+                    }
                 }
+
             }
         }
     }

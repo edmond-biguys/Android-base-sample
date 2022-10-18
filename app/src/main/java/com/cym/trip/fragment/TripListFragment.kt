@@ -16,7 +16,6 @@ import com.cym.androidx.coordinatorlayout.startmode.AActivity
 import com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
 import com.cym.sample.flow.FlowSampleActivity
-import com.cym.sample.persistence.DataStoreActivity
 import com.cym.sample.persistence.PersistenceSampleActivity
 import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
@@ -53,7 +52,7 @@ class TripListFragment : Fragment() {
             val itemDataList = mutableListOf(
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
-                "Persistence", "FlowSample", "判断、选择题", "名词解释"
+                "Persistence", "FlowSample", "判断、选择题", "名词解释", "判断题-否"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -87,8 +86,9 @@ class TripListFragment : Fragment() {
                     items[position] == "Start Mode" -> navigateStartModelActivity(context)
                     items[position] == "Persistence" -> navigatePersistenceActivity(context)
                     items[position] == "FlowSample" -> navigateFlowSampleActivity(context)
-                    items[position] == "判断、选择题" -> navigateQuestion1Activity(context)
-                    items[position] == "名词解释" -> navigateQuestion2Activity(context)
+                    items[position] == "判断、选择题" -> navigateQuestionActivity(context, "q1", onlyYes = true)
+                    items[position] == "名词解释" -> navigateQuestionActivity(context, "q2")
+                    items[position] == "判断题-否" -> navigateQuestionActivity(context, "q1", onlyPanduan = true)
                     else -> println("do nothing")
                 }
 
@@ -127,14 +127,11 @@ class TripListFragment : Fragment() {
             context.startActivity(Intent(context, FlowSampleActivity::class.java))
         }
 
-        private fun navigateQuestion1Activity(context: Context) {
+        private fun navigateQuestionActivity(context: Context, q: String = "q1", onlyYes: Boolean = false, onlyPanduan: Boolean = false) {
             val intent = Intent(context, FlowSampleActivity::class.java)
-            intent.putExtra("content", "q1")
-            context.startActivity(intent)
-        }
-        private fun navigateQuestion2Activity(context: Context) {
-            val intent = Intent(context, FlowSampleActivity::class.java)
-            intent.putExtra("content", "q2")
+            intent.putExtra("content", q)
+            intent.putExtra("onlyYes", onlyYes)
+            intent.putExtra("onlyPanduan", onlyPanduan)
             context.startActivity(intent)
         }
 
