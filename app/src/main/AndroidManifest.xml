@@ -13,14 +13,29 @@ package="com.xmcc.androidbasesample">
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+<uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
 <uses-permission
     android:name="android.permission.READ_LOGS"
     tools:ignore="ProtectedPermissions" />
+
+<permission
+    android:name="com.xmcc.androidbasesample.COURSE"
+    android:label="provider permission"
+    android:protectionLevel="normal" />
+
+<permission
+    android:name="com.xmcc.androidbasesample.COURSE.READ"
+    android:label="provider permission"
+    android:protectionLevel="normal" />
 
 <uses-feature
     android:name="android.hardware.bluetooth_le"
     android:required="true" />
 
+<!--    <queries>-->
+<!--        <package android:name="com.xmcc.androidbasesample" />-->
+<!--    </queries>-->
 <application
     android:name=".App"
     android:allowBackup="true"
@@ -50,9 +65,11 @@ package="com.xmcc.androidbasesample">
         android:name=".fragment.navigation.deeplink.DeepLinkActivity"
         android:label="@string/title_activity_deep_link"
         tools:ignore="AppLinkUrlError"
-        android:theme="@style/Theme.Xmcc.NoActionBar"></activity>
+        android:theme="@style/Theme.Xmcc.NoActionBar" />
     <activity android:name=".fragment.navigation.nestedgraph.NestedGraphActivity" />
-    <activity android:name=".fragment.navigation.TestDynamicSchemeActivity">
+    <activity
+        android:name=".fragment.navigation.TestDynamicSchemeActivity"
+        android:exported="true">
         <intent-filter tools:ignore="AppLinkUrlError">
             <action android:name="android.intent.action.VIEW" />
             <data
@@ -62,7 +79,9 @@ package="com.xmcc.androidbasesample">
             <category android:name="android.intent.category.DEFAULT" />
         </intent-filter>
     </activity>
-    <activity android:name=".fragment.navigation.TestSchemeActivity">
+    <activity
+        android:name=".fragment.navigation.TestSchemeActivity"
+        android:exported="true">
         <intent-filter tools:ignore="AppLinkUrlError">
             <action android:name="android.intent.action.VIEW" />
 
@@ -74,7 +93,9 @@ package="com.xmcc.androidbasesample">
         </intent-filter>
     </activity>
     <activity android:name=".viewbindingtest.ViewBindingInAdapterActivity" />
-    <activity android:name=".viewbindingtest.ViewBindingTestActivity">
+    <activity
+        android:name=".viewbindingtest.ViewBindingTestActivity"
+        android:exported="true">
         <intent-filter tools:ignore="AppLinkUrlError">
             <action android:name="android.intent.action.VIEW" />
             <category android:name="android.intent.category.DEFAULT" />
@@ -91,6 +112,7 @@ package="com.xmcc.androidbasesample">
         android:theme="@style/Animation2" />
     <activity
         android:name=".fragment.navigation.FragmentNavigationUseActivity"
+        android:exported="false"
         android:theme="@style/Animation">
         <nav-graph android:value="@navigation/nav_deeplink" />
     </activity>
@@ -192,8 +214,29 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.sample.flow.FlowSampleActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.sample.contentprovider.ContentProviderSampleActivity"
+        android:exported="false" />
+
+    <activity
+        android:name="com.cym.sample.binder.StartServiceTestActivity"
         android:exported="false"
-        />
+
+        >
+        <meta-data
+            android:name="android.app.lib_name"
+            android:value="" />
+    </activity>
+
+    <service android:name="com.cym.sample.binder.RemoteService"
+        android:exported="true"
+        android:enabled="true" >
+        <intent-filter>
+            <action android:name="com.cym.sample.binder.RemoteService"/>
+        </intent-filter>
+    </service>
 
     <provider
         android:name="androidx.core.content.FileProvider"
@@ -205,7 +248,17 @@ package="com.xmcc.androidbasesample">
             android:resource="@xml/provider_paths" />
     </provider>
 
-    <receiver android:name=".BootReceiver">
+    <provider
+        android:authorities="com.xmcc.androidbasesample.provider"
+        android:name="com.cym.sample.contentprovider.CourseContentProvider"
+        android:exported="true"
+        android:enabled="true"
+        android:permission="com.xmcc.androidbasesample.COURSE"
+        android:readPermission="com.xmcc.androidbasesample.COURSE.READ" />
+
+    <receiver
+        android:name=".BootReceiver"
+        android:exported="false">
         <intent-filter>
             <action android:name="android.intent.action.PACKAGE_ADDED" />
             <action android:name="android.intent.action.PACKAGE_REMOVED" />

@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.cym.utilities.logi
 import com.tencent.tinker.loader.app.TinkerApplication
 import com.tencent.tinker.loader.shareutil.ShareConstants
 import dagger.hilt.android.HiltAndroidApp
@@ -14,9 +15,12 @@ import javax.inject.Inject
 /**
  * Created by caoj on 2021/5/28.
  */
-@HiltAndroidApp
+//@HiltAndroidApp
 class App: Application() {
-
+    override fun onCreate() {
+        super.onCreate()
+        logi("application onCreate")
+    }
 }
 //class App: TinkerApplication(ShareConstants.TINKER_ENABLE_ALL, "com.xmcc.androidbasesample.AppLike",
 //    "com.tencent.tinker.loader.TinkerLoader", false) {

@@ -7,15 +7,15 @@ plugins {
     id "ua.eshepelyuk.ManifestClasspath"
     //使用kotlin("kapt")这个时，会报这个错误 only id(String) method calls allowed in plugins {}，修改为下边的内容，就可以了
     //kotlin("kapt") 为kotlin的写法，不是groovy语法
-    id("kotlin-kapt")
-    id("dagger.hilt.android.plugin")
+//    id("kotlin-kapt")
+    id 'kotlin-kapt'
+    id "dagger.hilt.android.plugin"
 }
 
 //apply from: rootProject.file('config.gradle')
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
 
     defaultConfig {
         applicationId "com.xmcc.androidbasesample"
@@ -28,7 +28,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
         ndk {
-            abiFilters 'armeabi-v7a'
+            //abiFilters 'armeabi-v7a'
+        }
+
+        kapt {
+            arguments {
+                arg("room.schemaLocation", "$projectDir/schemas")
+            }
         }
     }
     flavorDimensions "version"
@@ -86,11 +92,17 @@ android {
         viewBinding true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion '1.1.1'
+        kotlinCompilerExtensionVersion '1.4.7'
     }
 
     testOptions {
         unitTests.includeAndroidResources = true
+    }
+
+    sourceSets {
+        getByName("androidTest") {
+            assets.srcDirs(files(projectDir, "schemas"))
+        }
     }
 
 
@@ -98,7 +110,7 @@ android {
 
 dependencies {
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.6.10"
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.8.10'
     implementation "androidx.appcompat:appcompat:$rootProject.ext.ver.appcompat_ver"
     implementation project(path: ':permission')
 //    implementation project(path: ':compose-view')
@@ -121,16 +133,16 @@ dependencies {
 
     //tinker
     implementation "com.android.support:multidex:1.0.3"
-    implementation 'com.tencent.bugly:crashreport_upgrade:1.5.23'
-    implementation 'com.tencent.tinker:tinker-android-lib:1.9.9'
-    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.6.1'
+    implementation 'com.tencent.tinker:tinker-android-lib:1.9.14.25.1'
+    implementation 'com.tencent.bugly:nativecrashreport:3.9.2'
 
 
     //tinker
 
 
     //workManager
-    def work_version = "2.7.1"
+    def work_version = "2.8.1"
     // (Java only)
     implementation "androidx.work:work-runtime:$work_version"
     // Kotlin + coroutines
@@ -145,34 +157,34 @@ dependencies {
     implementation "androidx.work:work-multiprocess:$work_version"
     //workManager
 
-
+    def compose_version = "1.4.3"
     //compose
-    implementation("androidx.activity:activity-compose:1.4.0")
-    implementation("androidx.compose.ui:ui:1.1.1")
+    implementation("androidx.activity:activity-compose:1.7.2")
+    implementation("androidx.compose.ui:ui:$compose_version")
     // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:1.1.1")
+    implementation("androidx.compose.ui:ui-tooling:$compose_version")
     // Foundation (Border, Background, Box, Image, Scroll, shapes, animations, etc.)
-    implementation("androidx.compose.foundation:foundation:1.1.1")
+    implementation("androidx.compose.foundation:foundation:$compose_version")
     // Material Design
-    implementation("androidx.compose.material:material:1.1.1")
+    implementation("androidx.compose.material:material:$compose_version")
     // Material design icons
-    implementation("androidx.compose.material:material-icons-core:1.1.1")
-    implementation("androidx.compose.material:material-icons-extended:1.1.1")
+    implementation("androidx.compose.material:material-icons-core:$compose_version")
+    implementation("androidx.compose.material:material-icons-extended:$compose_version")
     // Integration with observables
-    implementation("androidx.compose.runtime:runtime-livedata:1.1.1")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.1.1")
+    implementation("androidx.compose.runtime:runtime-livedata:$compose_version")
+    implementation("androidx.compose.runtime:runtime-rxjava2:$compose_version")
 
     //类似与以前的support库
-    implementation "com.google.accompanist:accompanist-insets:0.21.3-beta"
-    implementation "com.google.accompanist:accompanist-insets-ui:0.21.3-beta"
-    implementation "com.google.accompanist:accompanist-systemuicontroller:0.21.3-beta"
+    implementation 'com.google.accompanist:accompanist-insets:0.31.3-beta'
+    implementation 'com.google.accompanist:accompanist-insets-ui:0.31.3-beta'
+    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.31.3-beta'
 
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.4.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1'
 
-    implementation ("androidx.navigation:navigation-compose:2.5.0-alpha03")
+    implementation ("androidx.navigation:navigation-compose:2.7.0-alpha01")
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.1.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.4.3")
     //compose
 
 //    implementation("com.github.edmond-biguys:Android-base-sample:v0.0.1-alpha01")
@@ -190,20 +202,39 @@ dependencies {
     implementation('androidx.datastore:datastore-rxjava3:1.0.0')
 
     //hilt
-    implementation('com.google.dagger:hilt-android:2.38.1')
-    kapt('com.google.dagger:hilt-android-compiler:2.38.1')
+    implementation('com.google.dagger:hilt-android:2.46.1')
+    kapt('com.google.dagger:hilt-android-compiler:2.46.1')
 
     //test
     testImplementation "junit:junit:$rootProject.ext.ver.junit"
     // Optional -- Robolectric environment
-    testImplementation 'androidx.test:core:1.4.0'
+    testImplementation 'androidx.test:core:1.5.0'
     // Optional -- Mockito framework
-    testImplementation 'org.mockito:mockito-core:2.19.0'
+    testImplementation 'org.mockito:mockito-core:5.3.1'
 
-    testImplementation "org.robolectric:robolectric:3.8"
+    testImplementation 'org.robolectric:robolectric:4.10.3'
     androidTestImplementation "com.android.support.test:runner:1.0.2"
     androidTestImplementation "com.android.support.test:rules:1.0.2"
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    def room_version = "2.5.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
+    // optional - RxJava2 support for Room
+    implementation "androidx.room:room-rxjava2:$room_version"
+    // optional - RxJava3 support for Room
+    implementation "androidx.room:room-rxjava3:$room_version"
+    // optional - Guava support for Room, including Optional and ListenableFuture
+    implementation "androidx.room:room-guava:$room_version"
+    // optional - Test helpers
+    testImplementation "androidx.room:room-testing:$room_version"
+    // optional - Paging 3 Integration
+    implementation "androidx.room:room-paging:$room_version"
+
+    kapt "androidx.room:room-compiler:2.5.1"
+
+    implementation "androidx.room:room-common:2.5.1"
+
 }
 
 kapt {

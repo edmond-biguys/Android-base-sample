@@ -2,7 +2,7 @@
 apply from: 'config.gradle'
 buildscript {
 
-    ext.kotlin_version = "1.6.10"
+    ext.kotlin_version = "1.8.21"
     repositories {
         maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
         maven { url 'https://maven.aliyun.com/repository/public' }
@@ -17,23 +17,23 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:7.0.4'
-        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.6.10'
-        def nav_version = "2.3.5"
+        classpath 'com.android.tools.build:gradle:7.3.1'
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.8.21'
+        def nav_version = '2.4.1'
         classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
         classpath "com.tencent.bugly:tinker-support:1.2.3"
         classpath "gradle.plugin.ua.eshepelyuk:ManifestClasspath:1.0.0"
         //hilt
-        classpath("com.google.dagger:hilt-android-gradle-plugin:2.38.1")
+        classpath('com.google.dagger:hilt-android-gradle-plugin:2.42')
     }
 }
 
 allprojects {
     repositories {
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/google' }
-        maven { url 'https://maven.aliyun.com/repository/central' }
+//        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+//        maven { url 'https://maven.aliyun.com/repository/public' }
+//        maven { url 'https://maven.aliyun.com/repository/google' }
+//        maven { url 'https://maven.aliyun.com/repository/central' }
 
         maven { url 'https://jitpack.io' }
         maven {

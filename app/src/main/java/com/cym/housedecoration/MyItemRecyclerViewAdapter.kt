@@ -16,8 +16,6 @@ import com.cym.housedecoration.bean.DecorativeMaterial
 import com.cym.housedecoration.detail.DecorativeMaterialDetailActivity
 
 import com.cym.housedecoration.placeholder.PlaceholderContent.PlaceholderItem
-import com.tencent.bugly.proguard.I
-import com.tencent.bugly.proguard.O
 import com.xmcc.androidbasesample.databinding.FragmentDecorationItemBinding
 
 /**

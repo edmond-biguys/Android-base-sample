@@ -1,9 +1,18 @@
 package com.cym.home.ui
 
 import android.Manifest
+import android.app.ActivityManager
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
+import android.hardware.camera2.CameraManager
+import android.hardware.display.DisplayManager
+import android.media.AudioManager
+import android.net.wifi.WifiManager
 import android.os.Bundle
+import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -11,6 +20,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.cym.base.BaseActivity
+import com.cym.sample.binder.RemoteService
 import com.cym.utilities.logi
 import com.githang.statusbar.StatusBarCompat
 import com.xmcc.androidbasesample.R
@@ -25,6 +35,11 @@ class MainActivity : BaseActivity() {
         StatusBarCompat.setStatusBarColor(this, resources.getColor(R.color.light_blue_A401))
         binding = ActivityMain2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        val cameraManager: CameraManager
+        val activityManager: ActivityManager
+        val wifiManager: WifiManager
+        val audioManager: AudioManager
+        val displayManager: DisplayManager
 
         //badge（通知数量小红点 或者 数字）使用
         val badgeHome = binding.bottomNavigationViewHome.getOrCreateBadge(R.id.navigation_home)
@@ -46,6 +61,14 @@ class MainActivity : BaseActivity() {
 
         val bug01 = Bug01()
         bug01.bug01()
+
+        val componentName = startService(Intent(this, RemoteService::class.java))
+        Log.i("MainActivity", "onCreate: componentName $componentName")
+
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        //sendBroadcast(Intent())
+        //bindService()
+
 
     }
 

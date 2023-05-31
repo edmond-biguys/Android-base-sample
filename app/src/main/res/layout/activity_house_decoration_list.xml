@@ -12,7 +12,7 @@
       android:id="@+id/toolbar"
       android:layout_width="match_parent"
       app:title="House Decoration"
-      android:background="@color/colorPrimary"
+
       android:layout_height="?actionBarSize"/>
 
   <com.google.android.material.tabs.TabLayout
