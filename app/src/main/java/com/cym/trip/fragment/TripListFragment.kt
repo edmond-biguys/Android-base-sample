@@ -15,6 +15,7 @@ import com.cym.androidx.coordinatorlayout.LifecycleTestActivity
 import com.cym.androidx.coordinatorlayout.startmode.AActivity
 import com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
+import com.cym.sample.camera.CameraXSampleActivity
 import com.cym.sample.contentprovider.ContentProviderSampleActivity
 import com.cym.sample.flow.FlowSampleActivity
 import com.cym.sample.persistence.PersistenceSampleActivity
@@ -54,7 +55,7 @@ class TripListFragment : Fragment() {
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
                 "Persistence", "FlowSample", "判断、选择题", "名词解释", "判断题-否",
-                "ContentProvider"
+                "ContentProvider","CameraX"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -92,6 +93,7 @@ class TripListFragment : Fragment() {
                     items[position] == "名词解释" -> navigateQuestionActivity(context, "q2")
                     items[position] == "判断题-否" -> navigateQuestionActivity(context, "q1", onlyPanduan = true)
                     items[position] == "ContentProvider" -> navigateContentProviderSampleActivity(context)
+                    items[position] == "CameraX" -> navigateCameraXActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -140,6 +142,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateContentProviderSampleActivity(context: Context) {
             context.startActivity(Intent(context, ContentProviderSampleActivity::class.java))
+        }
+
+        private fun navigateCameraXActivity(context: Context) {
+            context.startActivity(Intent(context, CameraXSampleActivity::class.java))
         }
 
         override fun getItemCount(): Int {

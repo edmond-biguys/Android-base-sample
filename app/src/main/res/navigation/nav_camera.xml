@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_camera"
+    app:startDestination="@id/camera_permission_fragment">
+
+    <fragment
+        android:id="@+id/camera_permission_fragment"
+        android:name="com.cym.sample.camera.CameraPermissionFragment"
+        android:label="camera_permission_fragment"
+        tools:layout="@layout/fragment_camera_permission"
+        >
+
+        <action
+            android:id="@+id/permission_to_preview"
+            app:destination="@id/camera_preview_fragment"
+            app:popUpTo="@id/camera_permission_fragment"
+            app:popUpToInclusive="true"
+            />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/camera_preview_fragment"
+        android:name="com.cym.sample.camera.preview.CameraPreviewFragment"
+        android:label="camera_preview_fragment"
+        tools:layout="@layout/fragment_camera_preview"
+        >
+
+    </fragment>
+
+</navigation>

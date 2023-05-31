@@ -230,11 +230,18 @@ package="com.xmcc.androidbasesample">
             android:value="" />
     </activity>
 
-    <service android:name="com.cym.sample.binder.RemoteService"
+    <activity
+        android:name="com.cym.sample.camera.CameraXSampleActivity"
+        android:exported="false"
+
+        />
+
+    <service
+        android:name="com.cym.sample.binder.RemoteService"
         android:exported="true"
-        android:enabled="true" >
+        android:enabled="true">
         <intent-filter>
-            <action android:name="com.cym.sample.binder.RemoteService"/>
+            <action android:name="com.cym.sample.binder.RemoteService" />
         </intent-filter>
     </service>
 
