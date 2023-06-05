@@ -5,7 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.xmcc.androidbasesample.R
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.LifecycleOwner
+import com.google.common.util.concurrent.ListenableFuture
+import com.xmcc.androidbasesample.databinding.FragmentCameraPreviewBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,6 +28,8 @@ class CameraPreviewFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+    private lateinit var binding: FragmentCameraPreviewBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -33,9 +41,32 @@ class CameraPreviewFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_camera_preview, container, false)
+        binding = FragmentCameraPreviewBinding.inflate(layoutInflater, container, false)
+        initPreview()
+        return binding.root
+    }
+
+    private lateinit var cameraProviderFuture : ListenableFuture<ProcessCameraProvider>
+
+    private fun initPreview() {
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
+
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            bindPreview(cameraProvider)
+        }, ContextCompat.getMainExecutor(requireActivity()))
+    }
+
+    private fun bindPreview(cameraProvider: ProcessCameraProvider) {
+        val preview = Preview.Builder().build()
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
+        preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+        //
+        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
     }
 
     companion object {
