@@ -1,6 +1,7 @@
 package com.cym.sample.camera.preview
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import android.view.ViewGroup
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
@@ -17,6 +19,7 @@ import com.xmcc.androidbasesample.databinding.FragmentCameraPreviewBinding
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+private const val TAG = "CameraPreviewFragment"
 
 /**
  * A simple [Fragment] subclass.
@@ -64,9 +67,24 @@ class CameraPreviewFragment : Fragment() {
         val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_BACK)
             .build()
+        //TextureViewImpl          D  Surface set on Preview.
+//        binding.previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
+
+
+        //SurfaceViewImpl          D  Surface set on Preview.
+        //这个是默认模式
+        with(binding) {
+            previewView.implementationMode = PreviewView.ImplementationMode.PERFORMANCE
+            previewView.scaleType = PreviewView.ScaleType.FIT_CENTER
+
+        }
+//        binding.previewView.scaleX = 2.2F
+//        binding.previewView.scaleY = 2.2F
         preview.setSurfaceProvider(binding.previewView.surfaceProvider)
-        //
-        var camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
+        //这里preview会返回一个camera对象，可以获取camera的一些信息，也可以对camera进行一些控制
+        val camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
+
+
     }
 
     companion object {
