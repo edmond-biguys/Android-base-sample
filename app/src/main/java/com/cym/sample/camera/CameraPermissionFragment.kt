@@ -6,9 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Build
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -17,8 +14,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation
 import com.xmcc.androidbasesample.R
-import kotlinx.coroutines.Delay
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 // TODO: Rename parameter arguments, choose names that match
@@ -91,7 +86,7 @@ class CameraPermissionFragment : Fragment() {
             //仅在started状态下生效
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 Navigation.findNavController(requireActivity(), R.id.cameraFragmentContainerView)
-                    .navigate(CameraPermissionFragmentDirections.permissionToPreview())
+                    .navigate(CameraPermissionFragmentDirections.permissionToSample())
             }
         }
     }

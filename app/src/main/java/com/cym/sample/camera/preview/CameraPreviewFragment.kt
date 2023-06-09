@@ -1,11 +1,13 @@
 package com.cym.sample.camera.preview
 
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.util.DisplayMetrics
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.camera.core.AspectRatio
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
@@ -14,6 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.google.common.util.concurrent.ListenableFuture
 import com.xmcc.androidbasesample.databinding.FragmentCameraPreviewBinding
+import kotlin.math.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +26,6 @@ private const val TAG = "CameraPreviewFragment"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [CameraPreviewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
 class CameraPreviewFragment : Fragment() {
@@ -63,10 +65,24 @@ class CameraPreviewFragment : Fragment() {
     }
 
     private fun bindPreview(cameraProvider: ProcessCameraProvider) {
-        val preview = Preview.Builder().build()
+
+        val screenAspectRatio = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val metrics = requireActivity().windowManager.currentWindowMetrics.bounds
+            aspectRatio(metrics.width(), metrics.height())
+        } else {
+            val displayMetrics = DisplayMetrics()
+            @Suppress("DEPRECATION")
+            requireActivity().windowManager.defaultDisplay.getMetrics(displayMetrics)
+            aspectRatio(displayMetrics.widthPixels, displayMetrics.heightPixels)
+        }
+
+        val preview = Preview.Builder()
+            .setTargetAspectRatio(screenAspectRatio)
+            .build()
         val cameraSelector = CameraSelector.Builder()
             .requireLensFacing(CameraSelector.LENS_FACING_BACK)
             .build()
+
         //TextureViewImpl          D  Surface set on Preview.
 //        binding.previewView.implementationMode = PreviewView.ImplementationMode.COMPATIBLE
 
@@ -84,26 +100,19 @@ class CameraPreviewFragment : Fragment() {
         //这里preview会返回一个camera对象，可以获取camera的一些信息，也可以对camera进行一些控制
         val camera = cameraProvider.bindToLifecycle(this as LifecycleOwner, cameraSelector, preview)
 
+    }
 
+    private fun aspectRatio(width: Int, height: Int): Int {
+        val previewRatio = max(width, height).toDouble() / min(width, height)
+        if (abs(previewRatio - RATIO_4_3_VALUE) <= abs(previewRatio - RATIO_16_9_VALUE)) {
+            return AspectRatio.RATIO_4_3
+        }
+        return AspectRatio.RATIO_16_9
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CameraPreviewFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CameraPreviewFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+        private const val RATIO_4_3_VALUE = 4.0 / 3.0
+        private const val RATIO_16_9_VALUE = 16.0 / 9.0
     }
 }

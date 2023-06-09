@@ -12,13 +12,38 @@
         tools:layout="@layout/fragment_camera_permission"
         >
 
+<!--        <action-->
+<!--            android:id="@+id/permission_to_preview"-->
+<!--            app:destination="@id/camera_preview_fragment"-->
+<!--            app:popUpTo="@id/camera_permission_fragment"-->
+<!--            app:popUpToInclusive="true"-->
+<!--            />-->
+
         <action
-            android:id="@+id/permission_to_preview"
-            app:destination="@id/camera_preview_fragment"
+            android:id="@+id/permission_to_sample"
+            app:destination="@id/camera_sample_fragment"
             app:popUpTo="@id/camera_permission_fragment"
             app:popUpToInclusive="true"
             />
 
+    </fragment>
+
+    <fragment
+        android:id="@+id/camera_sample_fragment"
+        android:name="com.cym.sample.camera.CameraSampleFragment"
+        android:label="camera_sample_fragment"
+        tools:layout="@layout/fragment_camera_sample_list"
+        >
+        <action
+            android:id="@+id/sample_to_preview"
+            app:destination="@id/camera_preview_fragment"
+            app:popUpTo="@id/camera_sample_fragment"
+            />
+        <action
+            android:id="@+id/sample_to_image_capture"
+            app:destination="@id/camera_image_capture_fragment"
+            app:popUpTo="@id/camera_sample_fragment"
+            />
     </fragment>
 
     <fragment
@@ -27,7 +52,13 @@
         android:label="camera_preview_fragment"
         tools:layout="@layout/fragment_camera_preview"
         >
-
     </fragment>
+
+    <fragment
+        android:id="@+id/camera_image_capture_fragment"
+        android:name="com.cym.sample.camera.image.ImageCaptureFragment"
+        android:label="camera_image_capture_fragment"
+        tools:layout="@layout/fragment_image_capture"
+        />
 
 </navigation>
