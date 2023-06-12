@@ -12,4 +12,12 @@
     <dimen name="common_vertical_spacing">8dp</dimen>
     <dimen name="app_bar_height">180dp</dimen>
 
+    <dimen name="stroke_small">4dp</dimen>
+    <dimen name="stroke_medium">8dp</dimen>
+    <dimen name="stroke_large">12dp</dimen>
+
+    <dimen name="round_button_small">32dp</dimen>
+    <dimen name="round_button_medium">64dp</dimen>
+    <dimen name="round_button_large">92dp</dimen>
+
 </resources>

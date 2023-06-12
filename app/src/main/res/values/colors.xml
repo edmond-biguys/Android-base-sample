@@ -18,4 +18,8 @@
     <color name="commom_blue_3b7ef2">#3B7EF2</color>
     <color name="commom_red_ff3973">#ff3973</color>
 
+    <color name="icActive">#FFFFFFFF</color>
+    <color name="icFocused">#DDFFFFFF</color>
+    <color name="icPressed">#AAFFFFFF</color>
+
 </resources>

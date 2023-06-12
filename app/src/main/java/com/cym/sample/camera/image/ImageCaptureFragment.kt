@@ -1,6 +1,7 @@
 package com.cym.sample.camera.image
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
@@ -8,8 +9,17 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.CameraState
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.content.ContextCompat
+import androidx.core.view.setPadding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
+import com.google.common.util.concurrent.ListenableFuture
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.FragmentImageCaptureBinding
 import java.text.SimpleDateFormat
@@ -26,10 +36,12 @@ class ImageCaptureFragment : Fragment() {
     private val TAG = "ImageCaptureFragment"
 
     private lateinit var imageCapture: ImageCapture
+    private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         cameraExecutorService = Executors.newSingleThreadExecutor()
+        cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
     }
     private lateinit var binding: FragmentImageCaptureBinding
     private lateinit var cameraExecutorService: ExecutorService
@@ -40,14 +52,75 @@ class ImageCaptureFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentImageCaptureBinding.inflate(inflater, container, false)
         buttonListener()
-        bindCameraUseCase()
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            bindCameraUseCase(cameraProvider)
+        }, ContextCompat.getMainExecutor(requireActivity()))
+
         return binding.root
     }
 
-    private fun bindCameraUseCase() {
+    private fun bindCameraUseCase(cameraProvider: ProcessCameraProvider) {
+        val cameraSelector = CameraSelector.Builder()
+            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .build()
+
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .build()
+
+        val camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture)
+        observeCamera(camera)
+    }
+
+    private fun observeCamera(camera: Camera) {
+        camera.cameraInfo.cameraState.observe(viewLifecycleOwner) {cameraState ->
+            when(cameraState.type) {
+                CameraState.Type.PENDING_OPEN -> {
+                    Log.i(TAG, "observeCamera: pending-open")
+                }
+                CameraState.Type.OPENING -> {
+                    Log.i(TAG, "observeCamera: opening")
+                }
+                CameraState.Type.OPEN -> {
+                    Log.i(TAG, "observeCamera: open")
+                }
+                CameraState.Type.CLOSING -> {
+                    Log.i(TAG, "observeCamera: closing")
+                }
+                CameraState.Type.CLOSED -> {
+                    Log.i(TAG, "observeCamera: closed")
+                }
+            }
+
+            cameraState.error?.let { error ->
+                when(error.code) {
+                    CameraState.ERROR_STREAM_CONFIG ->{
+                        Log.i(TAG, "observeCamera: ERROR_STREAM_CONFIG")
+                    }
+                    CameraState.ERROR_CAMERA_DISABLED ->{
+                        Log.i(TAG, "observeCamera: ERROR_CAMERA_DISABLED")
+                    }
+                    CameraState.ERROR_MAX_CAMERAS_IN_USE ->{
+                        Log.i(TAG, "observeCamera: ERROR_MAX_CAMERAS_IN_USE")
+                    }
+                    CameraState.ERROR_CAMERA_IN_USE ->{
+                        Log.i(TAG, "observeCamera: ERROR_CAMERA_IN_USE")
+                    }
+                    CameraState.ERROR_CAMERA_FATAL_ERROR ->{
+                        Log.i(TAG, "observeCamera: ERROR_CAMERA_FATAL_ERROR")
+                    }
+                    CameraState.ERROR_DO_NOT_DISTURB_MODE_ENABLED ->{
+                        Log.i(TAG, "observeCamera: ERROR_DO_NOT_DISTURB_MODE_ENABLED")
+                    }
+                    CameraState.ERROR_OTHER_RECOVERABLE_ERROR ->{
+                        Log.i(TAG, "observeCamera: ERROR_OTHER_RECOVERABLE_ERROR")
+                    }
+
+                }
+            }
+        }
+
 
     }
 
@@ -69,9 +142,27 @@ class ImageCaptureFragment : Fragment() {
                 .Builder(requireContext().contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
                 .build()
 
+            //实际上拍照，不用预览也是可以拍的，只不过没有预览，你不知道拍的是什么内容
             imageCapture.takePicture(outputOptions, cameraExecutorService,
                 object : ImageCapture.OnImageSavedCallback {
-                    override fun onImageSaved(outputFileResults: ImageCapture.OutputFileResults) {
+                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                        val savedUri = output.savedUri
+                        Log.i(TAG, "onImageSaved: $savedUri")
+
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                            setGalleryThumbnail(savedUri.toString())
+                        }
+
+                        // Implicit broadcasts will be ignored for devices running API level >= 24
+                        // so if you only target API level 24+ you can remove this statement
+                        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                            // Suppress deprecated Camera usage needed for API level 23 and below
+                            @Suppress("DEPRECATION")
+                            requireActivity().sendBroadcast(
+                                Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
+                            )
+                        }
+
 
                     }
 
@@ -83,6 +174,24 @@ class ImageCaptureFragment : Fragment() {
         }
     }
 
+    private fun setGalleryThumbnail(fileName: String) {
+        with(binding) {
+            buttonThumbnail.post {
+                buttonThumbnail.setPadding(resources.getDimension(R.dimen.stroke_small).toInt())
+
+                Glide.with(buttonThumbnail)
+                    .load(fileName)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(buttonThumbnail)
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        cameraExecutorService.shutdown()
+
+    }
 
 
 
