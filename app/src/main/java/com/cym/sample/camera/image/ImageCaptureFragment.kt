@@ -14,9 +14,12 @@ import androidx.camera.core.CameraSelector
 import androidx.camera.core.CameraState
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.google.common.util.concurrent.ListenableFuture
@@ -35,6 +38,7 @@ class ImageCaptureFragment : Fragment() {
 
     private val TAG = "ImageCaptureFragment"
 
+    private lateinit var preview: Preview
     private lateinit var imageCapture: ImageCapture
     private lateinit var cameraProviderFuture: ListenableFuture<ProcessCameraProvider>
 
@@ -60,16 +64,26 @@ class ImageCaptureFragment : Fragment() {
         return binding.root
     }
 
+    private var lensFacing = CameraSelector.LENS_FACING_BACK
     private fun bindCameraUseCase(cameraProvider: ProcessCameraProvider) {
         val cameraSelector = CameraSelector.Builder()
-            .requireLensFacing(CameraSelector.LENS_FACING_BACK)
+            .requireLensFacing(lensFacing)
             .build()
+
+        preview = Preview.Builder()
+            .build()
+        binding.previewView.scaleType = PreviewView.ScaleType.FIT_CENTER
+        preview.setSurfaceProvider(binding.previewView.surfaceProvider)
+
 
         imageCapture = ImageCapture.Builder()
             .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
             .build()
 
-        val camera = cameraProvider.bindToLifecycle(this, cameraSelector, imageCapture)
+        //在bind前，先unbind。比如切换摄像头等。
+        cameraProvider.unbindAll()
+
+        val camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture)
         observeCamera(camera)
     }
 
@@ -125,55 +139,77 @@ class ImageCaptureFragment : Fragment() {
     }
 
     private fun buttonListener() {
+        //拍照
         binding.buttonImageCapture.setOnClickListener {
-
             if (!this::imageCapture.isInitialized) return@setOnClickListener
+            capture()
+        }
+        //跳转到相册
+        binding.buttonThumbnail.setOnClickListener {
+            //val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            //startActivity(intent)
 
-            val name = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.CHINA).format(System.currentTimeMillis())
+            findNavController().navigate(R.id.camera_image_capture_to_gallery)
+        }
+        //切换摄像头
+        binding.buttonCameraSwitch.setOnClickListener {
+            lensFacing = if (CameraSelector.LENS_FACING_BACK == lensFacing)
+                CameraSelector.LENS_FACING_FRONT
+            else
+                CameraSelector.LENS_FACING_BACK
 
-            val contentValues = ContentValues().apply {
-                put(MediaStore.MediaColumns.DISPLAY_NAME, name)
-                put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-                val appName = requireContext().resources.getString(R.string.app_name)
-                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$appName")
-            }
-
-            val outputOptions = ImageCapture.OutputFileOptions
-                .Builder(requireContext().contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-                .build()
-
-            //实际上拍照，不用预览也是可以拍的，只不过没有预览，你不知道拍的是什么内容
-            imageCapture.takePicture(outputOptions, cameraExecutorService,
-                object : ImageCapture.OnImageSavedCallback {
-                    override fun onImageSaved(output: ImageCapture.OutputFileResults) {
-                        val savedUri = output.savedUri
-                        Log.i(TAG, "onImageSaved: $savedUri")
-
-                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                            setGalleryThumbnail(savedUri.toString())
-                        }
-
-                        // Implicit broadcasts will be ignored for devices running API level >= 24
-                        // so if you only target API level 24+ you can remove this statement
-                        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
-                            // Suppress deprecated Camera usage needed for API level 23 and below
-                            @Suppress("DEPRECATION")
-                            requireActivity().sendBroadcast(
-                                Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
-                            )
-                        }
-
-
-                    }
-
-                    override fun onError(exception: ImageCaptureException) {
-                        Log.i(TAG, "onError: $exception")
-                    }
-
-                })
+            bindCameraUseCase(cameraProviderFuture.get())
         }
     }
 
+    private fun capture() {
+
+        val name = SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS", Locale.CHINA).format(System.currentTimeMillis())
+
+        val contentValues = ContentValues().apply {
+            put(MediaStore.MediaColumns.DISPLAY_NAME, name)
+            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
+            val appName = requireContext().resources.getString(R.string.app_name)
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$appName")
+        }
+
+        val outputOptions = ImageCapture.OutputFileOptions
+            .Builder(requireContext().contentResolver, MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+            .build()
+
+        //实际上拍照，不用预览也是可以拍的，只不过没有预览，你不知道拍的是什么内容
+        imageCapture.takePicture(outputOptions, cameraExecutorService,
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    val savedUri = output.savedUri
+                    Log.i(TAG, "onImageSaved: $savedUri")
+
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+                        //设置缩略图
+                        setGalleryThumbnail(savedUri.toString())
+                    }
+
+                    // Implicit broadcasts will be ignored for devices running API level >= 24
+                    // so if you only target API level 24+ you can remove this statement
+                    if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.N) {
+                        // Suppress deprecated Camera usage needed for API level 23 and below
+                        @Suppress("DEPRECATION")
+                        requireActivity().sendBroadcast(
+                            Intent(android.hardware.Camera.ACTION_NEW_PICTURE, savedUri)
+                        )
+                    }
+
+
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    Log.i(TAG, "onError: $exception")
+                }
+
+            })
+    }
+
+    //拍照完成后，在跳转到相册按钮上，显示上一张照片的缩略图。
     private fun setGalleryThumbnail(fileName: String) {
         with(binding) {
             buttonThumbnail.post {

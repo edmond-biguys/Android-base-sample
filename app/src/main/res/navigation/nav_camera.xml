@@ -59,6 +59,19 @@
         android:name="com.cym.sample.camera.image.ImageCaptureFragment"
         android:label="camera_image_capture_fragment"
         tools:layout="@layout/fragment_image_capture"
+        >
+        <action
+            android:id="@+id/camera_image_capture_to_gallery"
+            app:destination="@id/camera_gallery_fragment"
+            app:popUpTo="@id/camera_image_capture_fragment"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/camera_gallery_fragment"
+        android:name="com.cym.sample.camera.image.GalleryFragment"
+        android:label="camera_gallery_fragment"
+        tools:layout="@layout/fragment_gallery2"
         />
 
 </navigation>
