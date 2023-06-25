@@ -44,7 +44,8 @@ class ImageCaptureFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        cameraExecutorService = Executors.newSingleThreadExecutor()
+        Log.i(TAG, "onCreate: ")
+//        cameraExecutorService = Executors.newSingleThreadExecutor()
         cameraProviderFuture = ProcessCameraProvider.getInstance(requireActivity())
     }
     private lateinit var binding: FragmentImageCaptureBinding
@@ -53,6 +54,8 @@ class ImageCaptureFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.i(TAG, "onCreateView: ")
+        cameraExecutorService = Executors.newSingleThreadExecutor()
         // Inflate the layout for this fragment
         binding = FragmentImageCaptureBinding.inflate(inflater, container, false)
         buttonListener()
@@ -148,7 +151,7 @@ class ImageCaptureFragment : Fragment() {
         binding.buttonThumbnail.setOnClickListener {
             //val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             //startActivity(intent)
-
+            Log.i(TAG, "buttonListener: ")
             findNavController().navigate(R.id.camera_image_capture_to_gallery)
         }
         //切换摄像头
@@ -225,8 +228,14 @@ class ImageCaptureFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        Log.i(TAG, "onDestroyView: ")
         cameraExecutorService.shutdown()
 
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "onDestroy: ")
     }
 
 
