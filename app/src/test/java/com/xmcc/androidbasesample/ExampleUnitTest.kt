@@ -18,7 +18,3 @@ class ExampleUnitTest {
 
 
 }
-
-fun main(args: Array<String>) {
-
-}

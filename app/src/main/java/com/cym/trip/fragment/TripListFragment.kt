@@ -43,7 +43,7 @@ class TripListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         println("TripListFragment onViewCreated")
-        viewModel = ViewModelProvider(requireActivity()).get(TripListViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity())[TripListViewModel::class.java]
         createRecyclerView()
     }
 
@@ -55,7 +55,7 @@ class TripListFragment : Fragment() {
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
                 "Persistence", "FlowSample", "判断、选择题", "名词解释", "判断题-否",
-                "ContentProvider","CameraX"
+                "ContentProvider","CameraX", "MediaStore"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -94,6 +94,7 @@ class TripListFragment : Fragment() {
                     items[position] == "判断题-否" -> navigateQuestionActivity(context, "q1", onlyPanduan = true)
                     items[position] == "ContentProvider" -> navigateContentProviderSampleActivity(context)
                     items[position] == "CameraX" -> navigateCameraXActivity(context)
+                    items[position] == "MediaStore" -> navigateCameraXActivity(context)
                     else -> println("do nothing")
                 }
 
