@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_media_store"
+    app:startDestination="@id/homeMediaStoreFragment">
+
+    <fragment
+        android:id="@+id/homeMediaStoreFragment"
+        android:name="com.cym.sample.mediastore.MediaStoreFarseerFragment"
+        android:label="home_media_store_fragment"
+        tools:layout="@layout/fragment_media_store_farseer">
+        <action
+            android:id="@+id/action_homeMediaStoreFragment_to_mediaStoreCameraFragment"
+            app:destination="@id/mediaStoreCameraFragment" />
+        <action
+            android:id="@+id/action_homeMediaStoreFragment_to_mediaStoreDetailFragment"
+            app:destination="@id/mediaStoreDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mediaStoreCameraFragment"
+        android:name="com.cym.sample.mediastore.camera.CameraFragment"
+        android:label="media_store_camera_fragment"
+        tools:layout="@layout/fragment_camera_media_store">
+        <action
+            android:id="@+id/action_mediaStoreCameraFragment_to_homeMediaStoreFragment"
+            app:destination="@id/homeMediaStoreFragment" />
+        <action
+            android:id="@+id/action_mediaStoreCameraFragment_to_mediaStoreDetailFragment"
+            app:destination="@id/mediaStoreDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mediaStoreDetailFragment"
+        android:name="com.cym.sample.mediastore.detail.MediaDetailFragment"
+        android:label="media_store_detail_fragment"
+        tools:layout="@layout/fragment_media_detail">
+        <action
+            android:id="@+id/action_mediaStoreDetailFragment_to_homeMediaStoreFragment"
+            app:destination="@id/homeMediaStoreFragment" />
+        <action
+            android:id="@+id/action_mediaStoreDetailFragment_to_mediaStoreCameraFragment"
+            app:destination="@id/mediaStoreCameraFragment" />
+    </fragment>
+</navigation>

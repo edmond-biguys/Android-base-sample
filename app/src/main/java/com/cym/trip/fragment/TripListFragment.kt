@@ -18,6 +18,7 @@ import com.cym.jetpack.workmanager.WorkManagerSampleActivity
 import com.cym.sample.camera.CameraXSampleActivity
 import com.cym.sample.contentprovider.ContentProviderSampleActivity
 import com.cym.sample.flow.FlowSampleActivity
+import com.cym.sample.mediastore.MediaStoreFarseerActivity
 import com.cym.sample.persistence.PersistenceSampleActivity
 import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
@@ -94,7 +95,7 @@ class TripListFragment : Fragment() {
                     items[position] == "判断题-否" -> navigateQuestionActivity(context, "q1", onlyPanduan = true)
                     items[position] == "ContentProvider" -> navigateContentProviderSampleActivity(context)
                     items[position] == "CameraX" -> navigateCameraXActivity(context)
-                    items[position] == "MediaStore" -> navigateCameraXActivity(context)
+                    items[position] == "MediaStore" -> navigateMediaStoreActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -147,6 +148,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateCameraXActivity(context: Context) {
             context.startActivity(Intent(context, CameraXSampleActivity::class.java))
+        }
+
+        private fun navigateMediaStoreActivity(context: Context) {
+            context.startActivity(Intent(context, MediaStoreFarseerActivity::class.java))
         }
 
         override fun getItemCount(): Int {
