@@ -2,20 +2,21 @@ package com.cym.sample.mediastore
 
 import android.annotation.SuppressLint
 import android.os.Build
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.xmcc.androidbasesample.R
 import com.xmcc.androidbasesample.databinding.FragmentMediaStoreFarseerBinding
+
 
 /*
 功能描述
@@ -50,16 +51,46 @@ class MediaStoreFarseerFragment : Fragment() {
         initListener()
         initGrid()
         initObserver()
+        viewModel.updateImages()
         return binding.root
     }
-
+    private val images = mutableListOf<MediaStoreItem>()
     private lateinit var adapter: MediaStoreAdapter
+    private var isLoading = false
+
     private fun initGrid() {
         binding.recyclerViewMediaList.layoutManager = GridLayoutManager(context, 4).apply {
             orientation = GridLayoutManager.VERTICAL
         }
-        adapter = MediaStoreAdapter(listOf())
+        adapter = MediaStoreAdapter(images)
         binding.recyclerViewMediaList.adapter = adapter
+        binding.recyclerViewMediaList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                Log.i(TAG, "onScrollStateChanged: $newState")
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+
+            @RequiresApi(Build.VERSION_CODES.Q)
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val layoutManager = recyclerView.layoutManager as GridLayoutManager?
+                val visibleItemCount = layoutManager!!.childCount
+                val totalItemCount = layoutManager!!.itemCount
+                val firstVisibleItemPosition = layoutManager!!.findFirstVisibleItemPosition()
+
+                if (visibleItemCount + firstVisibleItemPosition >= totalItemCount && firstVisibleItemPosition >= 0) {
+                    // 检测到滚动到底部，执行更新数据的操作
+                    // 在这里可以调用适配器的方法更新数据或者加载更多数据
+                    Log.i(TAG, "onScrolled: 滚动到底部")
+                    if (isLoading) {
+                        return
+                    }
+                    isLoading = true
+                    viewModel.updateImages()
+
+                }
+            }
+        })
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -67,13 +98,15 @@ class MediaStoreFarseerFragment : Fragment() {
     private fun initObserver() {
         viewModel.mediaStoreLiveData.observe(requireActivity()) {
             Log.i(TAG, "initObserver: $it")
-            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
-            adapter.notifyDataSetChanged()
+//            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
+//            adapter.notifyDataSetChanged()
         }
         viewModel.imageMediaStoreLiveData.observe(requireActivity()) {
             Log.i(TAG, "initObserver2: $it")
-            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
+//            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
+            images.addAll(it)
             adapter.notifyDataSetChanged()
+            isLoading = false
         }
     }
 

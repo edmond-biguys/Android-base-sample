@@ -1,16 +1,21 @@
 package com.cym.sample.mediastore
 
 import android.app.Application
+import android.content.ContentResolver
 import android.content.ContentUris
 import android.os.Build
+import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
-import com.bumptech.glide.load.data.mediastore.MediaStoreUtil
+import androidx.lifecycle.viewModelScope
 import com.cym.utilities.logi
+import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
 private const val TAG = "MediaStoreFarseerVM"
@@ -75,55 +80,118 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
     }
 
     @RequiresApi(Build.VERSION_CODES.Q)
-    val imageMediaStoreLiveData = liveData<List<MediaStoreItem>> {
-        val cr = application.contentResolver
+    val imageMediaStoreLiveData = MutableLiveData<List<MediaStoreItem>>()
 
-        val projection = arrayOf(
-            MediaStore.Images.Media._ID,
-            MediaStore.Images.Media.DISPLAY_NAME,
-            MediaStore.Images.Media.SIZE,
-            MediaStore.Images.Media.DATA,
-            MediaStore.Images.Media.TITLE
-        )
-        val cursor = cr.query(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            projection,
-            null,
-            null,
-            null
-        )
-        cursor?.let {
-            val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-            val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
-            val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
-            val path = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
-            val list = mutableListOf<MediaStoreItem>()
-            list.add(MediaStoreItem(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null,
-                0,
-                "拍照",
-                0,
-                0
-            ))
-            while (it.moveToNext()) {
-                val id = cursor.getLong(idColumn)
-                val name = cursor.getString(nameColumn)
-                val size = cursor.getInt(sizeColumn)
-                val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                val item = MediaStoreItem(
-                    contentUri,
-                    cr.loadThumbnail(contentUri, Size(120, 120), null),
-                    id,
-                    name,
-                    0,
-                    size
+    private var pageIndex = 0
+    private val pageSize = 39
+    @RequiresApi(Build.VERSION_CODES.Q)
+    fun updateImages() {
+        viewModelScope.launch {
+            val cr = getApplication<Application>().contentResolver
+
+            val projection = arrayOf(
+                MediaStore.Images.Media._ID,
+                MediaStore.Images.Media.DISPLAY_NAME,
+                MediaStore.Images.Media.SIZE,
+                MediaStore.Images.Media.DATA,
+                MediaStore.Images.Media.TITLE,
+                MediaStore.Images.Media.DATE_ADDED,
+
                 )
-                list.add(item)
+
+            val sortOrder = "${MediaStore.Images.Media.DATE_ADDED} DESC"
+            val selection = "${MediaStore.Images.Media.DATE_ADDED} >= ?"
+            val selectionArgs = arrayOf(
+                dateToTimestamp(15, 11, 2023).toString()
+            )
+
+            val limit = "$pageSize offset ${pageSize*pageIndex}"
+            val queryArgs = createSqlQueryBundle(selection, selectionArgs, sortOrder, limit)
+//        val cursor = cr.query(
+//            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//            projection,
+//            selection,
+//            selectionArgs,
+//            sortOrder
+//        )
+            val cursor = cr.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                queryArgs,
+                null)
+            cursor?.let {
+                val idColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                val nameColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DISPLAY_NAME)
+                val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
+                val path = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
+                val list = mutableListOf<MediaStoreItem>()
+                list.add(MediaStoreItem(
+                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    null,
+                    0,
+                    "拍照",
+                    0,
+                    0
+                ))
+
+                while (it.moveToNext()) {
+                    try {
+                        val id = cursor.getLong(idColumn)
+                        val name = cursor.getString(nameColumn)
+                        val size = cursor.getInt(sizeColumn)
+                        val contentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+
+                        val item = MediaStoreItem(
+                            contentUri,
+                            cr.loadThumbnail(contentUri, Size(200, 200), null),
+//                        null,
+                            id,
+                            name,
+                            0,
+                            size
+                        )
+                        list.add(item)
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                }
+                Log.i(TAG, "list.size ${list.size} $list: ")
+
+                //emit(list)
+                imageMediaStoreLiveData.postValue(list)
+                pageIndex++
             }
-            Log.i(TAG, "$list: ")
-            emit(list)
         }
     }
+
+    fun createSqlQueryBundle(
+        selection: String?,
+        selectionArgs: Array<String>?,
+        sortOrder: String?,
+        limit: String?
+    ): Bundle? {
+        if (selection == null && selectionArgs == null && sortOrder == null && limit == null) {
+            return null
+        }
+        val queryArgs = Bundle()
+        if (selection != null) {
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SELECTION, selection)
+        }
+        if (selectionArgs != null) {
+            queryArgs.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, selectionArgs)
+        }
+        if (sortOrder != null) {
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, sortOrder)
+        }
+        if (limit != null) {
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_LIMIT, limit)
+        }
+        return queryArgs
+    }
+
+    private fun dateToTimestamp(day: Int, month: Int, year: Int): Long =
+        SimpleDateFormat("dd.MM.yyyy").let { formatter ->
+            TimeUnit.MICROSECONDS.toSeconds(formatter.parse("$day.$month.$year")?.time ?: 0)
+        }
 
 }
