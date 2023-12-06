@@ -85,7 +85,7 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
     private var pageIndex = 0
     private val pageSize = 39
     @RequiresApi(Build.VERSION_CODES.Q)
-    fun updateImages() {
+    fun updateImages(init: Boolean = false) {
         viewModelScope.launch {
             val cr = getApplication<Application>().contentResolver
 
@@ -158,8 +158,13 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
                 Log.i(TAG, "list.size ${list.size} $list: ")
 
                 //emit(list)
-                imageMediaStoreLiveData.postValue(list)
-                pageIndex++
+                if (list.size > 1) {
+                    imageMediaStoreLiveData.postValue(list)
+                    pageIndex++
+                } else if (init) {
+                    imageMediaStoreLiveData.postValue(list)
+                }
+
             }
         }
     }

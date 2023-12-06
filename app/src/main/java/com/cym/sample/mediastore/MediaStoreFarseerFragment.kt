@@ -51,7 +51,7 @@ class MediaStoreFarseerFragment : Fragment() {
         initListener()
         initGrid()
         initObserver()
-        viewModel.updateImages()
+        viewModel.updateImages(true)
         return binding.root
     }
     private val images = mutableListOf<MediaStoreItem>()
