@@ -20,6 +20,7 @@ import com.cym.sample.contentprovider.ContentProviderSampleActivity
 import com.cym.sample.flow.FlowSampleActivity
 import com.cym.sample.mediastore.MediaStoreFarseerActivity
 import com.cym.sample.persistence.PersistenceSampleActivity
+import com.cym.sample.storage.StorageTestActivity
 import com.cym.sunflower.GardenActivity
 import com.xmcc.androidbasesample.databinding.ItemFunctionListBinding
 import com.xmcc.androidbasesample.databinding.TripListFragmentBinding
@@ -56,7 +57,7 @@ class TripListFragment : Fragment() {
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
                 "Persistence", "FlowSample", "判断、选择题", "名词解释", "判断题-否",
-                "ContentProvider","CameraX", "MediaStore"
+                "ContentProvider","CameraX", "MediaStore", "StorageTest"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -96,6 +97,7 @@ class TripListFragment : Fragment() {
                     items[position] == "ContentProvider" -> navigateContentProviderSampleActivity(context)
                     items[position] == "CameraX" -> navigateCameraXActivity(context)
                     items[position] == "MediaStore" -> navigateMediaStoreActivity(context)
+                    items[position] == "StorageTest" -> navigateStorageTestActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -152,6 +154,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateMediaStoreActivity(context: Context) {
             context.startActivity(Intent(context, MediaStoreFarseerActivity::class.java))
+        }
+
+        private fun navigateStorageTestActivity(context: Context) {
+            context.startActivity(Intent(context, StorageTestActivity::class.java))
         }
 
         override fun getItemCount(): Int {

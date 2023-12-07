@@ -122,7 +122,7 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
 //        )
 
             val cursor = cr.query(
-                MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,//Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 projection,
                 queryArgs,
                 null)

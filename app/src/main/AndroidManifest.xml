@@ -248,6 +248,9 @@ package="com.xmcc.androidbasesample">
         android:name="com.cym.sample.mediastore.MediaStoreFarseerActivity"
         android:exported="false"
         />
+    <activity android:name="com.cym.sample.storage.StorageTestActivity"
+        android:exported="false"
+        />
 
     <service
         android:name="com.cym.sample.binder.RemoteService"
