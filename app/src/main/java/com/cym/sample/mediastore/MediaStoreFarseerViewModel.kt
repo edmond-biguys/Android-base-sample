@@ -3,18 +3,25 @@ package com.cym.sample.mediastore
 import android.app.Application
 import android.content.ContentResolver
 import android.content.ContentUris
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ThumbnailUtils
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.util.Size
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.viewModelScope
 import com.cym.utilities.logi
 import kotlinx.coroutines.launch
+import java.io.ByteArrayOutputStream
+import java.io.InputStream
 import java.text.SimpleDateFormat
 import java.util.concurrent.TimeUnit
 
@@ -79,12 +86,11 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
+
     val imageMediaStoreLiveData = MutableLiveData<List<MediaStoreItem>>()
 
     private var pageIndex = 0
     private val pageSize = 39
-    @RequiresApi(Build.VERSION_CODES.Q)
     fun updateImages(init: Boolean = false) {
         viewModelScope.launch {
             val cr = getApplication<Application>().contentResolver
@@ -114,8 +120,9 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
 //            selectionArgs,
 //            sortOrder
 //        )
+
             val cursor = cr.query(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                MediaStore.Images.Thumbnails.EXTERNAL_CONTENT_URI,//Media.EXTERNAL_CONTENT_URI,
                 projection,
                 queryArgs,
                 null)
@@ -143,8 +150,8 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
 
                         val item = MediaStoreItem(
                             contentUri,
-                            cr.loadThumbnail(contentUri, Size(200, 200), null),
-//                        null,
+                            //cr.loadThumbnail(contentUri, Size(200, 200), null),
+                            loadThumbnail(contentUri, 200, 200, cr),
                             id,
                             name,
                             0,
@@ -169,7 +176,7 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
         }
     }
 
-    fun createSqlQueryBundle(
+    private fun createSqlQueryBundle(
         selection: String?,
         selectionArgs: Array<String>?,
         sortOrder: String?,
@@ -185,12 +192,20 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
         if (selectionArgs != null) {
             queryArgs.putStringArray(ContentResolver.QUERY_ARG_SQL_SELECTION_ARGS, selectionArgs)
         }
-        if (sortOrder != null) {
-            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, sortOrder)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            if (sortOrder != null) {
+                queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, sortOrder)
+            }
+            if (limit != null) {
+                queryArgs.putString(ContentResolver.QUERY_ARG_SQL_LIMIT, limit)
+            }
+        } else {
+            val sortOrderTmp = sortOrder ?: ""
+            val limitTmp = limit ?: ""
+            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_SORT_ORDER, "$sortOrderTmp $limitTmp")
         }
-        if (limit != null) {
-            queryArgs.putString(ContentResolver.QUERY_ARG_SQL_LIMIT, limit)
-        }
+
         return queryArgs
     }
 
@@ -199,4 +214,39 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
             TimeUnit.MICROSECONDS.toSeconds(formatter.parse("$day.$month.$year")?.time ?: 0)
         }
 
+
+    private fun loadThumbnail(
+        uri: Uri, width: Int, height: Int,
+        contentResolver: ContentResolver
+    ): Bitmap? {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            contentResolver.loadThumbnail(uri, Size(width, height), null)
+        }
+        return compressImageFromUri(getApplication(), uri, width, height)
+    }
+
+    private fun compressImageFromUri(context: Context, imageUri: Uri, maxWidth: Int, maxHeight: Int, quality: Int = 100): Bitmap? {
+        try {
+            val inputStream: InputStream? = context.contentResolver.openInputStream(imageUri)
+            val originalBitmap: Bitmap = BitmapFactory.decodeStream(inputStream)
+
+            val width: Int = originalBitmap.width
+            val height: Int = originalBitmap.height
+            val scaleWidth: Float = maxWidth.toFloat() / width
+            val scaleHeight: Float = maxHeight.toFloat() / height
+            val matrix = Matrix().apply {
+                postScale(scaleWidth, scaleHeight)
+            }
+            val resizedBitmap: Bitmap = Bitmap.createBitmap(originalBitmap, 0, 0, width, height, matrix, false)
+
+            val outputStream = ByteArrayOutputStream()
+            resizedBitmap.compress(Bitmap.CompressFormat.JPEG, quality, outputStream)
+
+            val byteArray: ByteArray = outputStream.toByteArray()
+            return BitmapFactory.decodeByteArray(byteArray, 0, byteArray.size)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        return null
+    }
 }
