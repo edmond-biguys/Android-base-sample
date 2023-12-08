@@ -95,104 +95,83 @@ class StorageTestActivity: AppCompatActivity() {
 
     //读取internal的cache
     private fun readCache() {
-        var fis: FileInputStream? = null
-        try {
-            val fileCache = File("$cacheDir/test/$FILE_NAME_CACHE")
-            val testCacheFile = File("$cacheDir/test")
-            if (!testCacheFile.exists())
-                testCacheFile.mkdirs()
-            if (!fileCache.exists()) {
-                fileCache.createNewFile()
-            }
-            val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
-            val uuid = storageManager.getUuidForPath(fileCache)
-            val bytes = storageManager.getCacheQuotaBytes(uuid)
-            Log.i(TAG, "readCache: cache $bytes uuid $uuid")
-            fis = FileInputStream(fileCache)
-            val byteArray = ByteArray(fis.available())
-            fis.read(byteArray)
-            val content = String(byteArray)
-            binding.tvName.text = content
+        val path = "$cacheDir/test"
+        val fileName = FILE_NAME_CACHE
+        binding.tvName.text = readFile(path, fileName)
 
-            fileCache.readLines().forEach {
-                Log.i(TAG, "readCache: $it")
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            fis?.close()
-        }
+        val fileCache = File("$path/$fileName")
+        val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
+        val uuid = storageManager.getUuidForPath(fileCache)
+        val bytes = storageManager.getCacheQuotaBytes(uuid)
+        Log.i(TAG, "readCache: cache $bytes uuid $uuid")
     }
     //写入internal的cache
     private fun writeCache() {
-        var fos: FileOutputStream? = null
-        try {
-            val fileCache = File("$cacheDir/test/$FILE_NAME_CACHE")
-            val testCacheFile = File("$cacheDir/test")
-            if (!testCacheFile.exists())
-                testCacheFile.mkdirs()
-            if (!fileCache.exists()) {
-                fileCache.createNewFile()
-            }
-            fos = FileOutputStream(fileCache, true)
-            fos.write("通过app specific cache files 记录，第${index}次\n".toByteArray())
-            index++
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            fos?.close()
-        }
+        val path = "$cacheDir/test"
+        val fileName = FILE_NAME_CACHE
+        val content = "通过app specific cache files 记录，第${index}次\n"
+        writeFile(path, fileName, content)
+        index++
     }
     //读取external的cache
     private fun readExternalCache() {
-
-        var fis: FileInputStream? = null
-        try {
-            //外部存储空间使用前，需要先判断是否可以访问
-            if (!isExternalStorageReadable()) {
-                return
-            }
-
-            val fileCache = File("$externalCacheDir/test/$FILE_NAME_CACHE")
-            val testCacheFile = File("$externalCacheDir/test")
-            if (!testCacheFile.exists())
-                testCacheFile.mkdirs()
-            if (!fileCache.exists()) {
-                fileCache.createNewFile()
-            }
-            fis = FileInputStream(fileCache)
-            val byteArray = ByteArray(fis.available())
-            fis.read(byteArray)
-            val content = String(byteArray)
-            binding.tvName.text = content
-
-            fileCache.readLines().forEach {
-                Log.i(TAG, "readCache: $it")
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            fis?.close()
-        }
+        val path = "$externalCacheDir/test"
+        val fileName = FILE_NAME_CACHE
+        binding.tvName.text = readFile(path, fileName)
     }
 
     //写入external的cache
     private fun writeExternalCache() {
+        val path = "$externalCacheDir/test"
+        val fileName = FILE_NAME_CACHE
+        val content = "通过app specific external cache files 记录，第${index}次\n"
+        writeFile(path, fileName, content)
+        index++
+    }
+
+    private fun readFile(path: String, fileName: String): String {
+        var fis: FileInputStream? = null
+        try {
+            if (!isExternalStorageReadable()) {
+                Log.i(TAG, "readFile: storage not readable")
+                return ""
+            }
+
+            val pathFile = File(path)
+            val file = File("$path/$fileName")
+            if (!pathFile.exists())
+            {
+                Log.i(TAG, "readFile: path not exists")
+                return ""
+            }
+            if (!file.exists()) {
+                Log.i(TAG, "readFile: file not exists")
+                return ""
+            }
+            fis = FileInputStream(file)
+            val byteArray = ByteArray(fis.available())
+            fis.read(byteArray)
+            return String(byteArray)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            fis?.close()
+        }
+        return ""
+    }
+
+    private fun writeFile(path: String, fileName: String, content: String) {
         var fos: FileOutputStream? = null
         try {
-            if (!isExternalStorageWritable()) {
-                return
+            val file = File("$path/$fileName")
+            val pathFile = File("$path")
+            if (!pathFile.exists())
+                pathFile.mkdirs()
+            if (!file.exists()) {
+                file.createNewFile()
             }
-            val fileCache = File("$externalCacheDir/test/$FILE_NAME_CACHE")
-            val testCacheFile = File("$externalCacheDir/test")
-            if (!testCacheFile.exists())
-                testCacheFile.mkdirs()
-            if (!fileCache.exists()) {
-                fileCache.createNewFile()
-            }
-            fos = FileOutputStream(fileCache, true)
-            fos.write("通过app specific external cache files 记录，第${index}次\n".toByteArray())
-            index++
+            fos = FileOutputStream(file, true)
+            fos.write(content.toByteArray())
         } catch (e: Exception) {
             e.printStackTrace()
         } finally {
