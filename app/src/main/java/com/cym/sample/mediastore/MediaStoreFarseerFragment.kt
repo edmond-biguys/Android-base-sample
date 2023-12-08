@@ -8,9 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +45,6 @@ class MediaStoreFarseerFragment : Fragment() {
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
         binding = FragmentMediaStoreFarseerBinding.inflate(inflater, container, false)
@@ -54,6 +55,11 @@ class MediaStoreFarseerFragment : Fragment() {
         viewModel.updateImages(true)
         return binding.root
     }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        Log.i(TAG, "onCreate onViewCreated: ")
+    }
     private val images = mutableListOf<MediaStoreItem>()
     private lateinit var adapter: MediaStoreAdapter
     private var isLoading = false
@@ -62,7 +68,14 @@ class MediaStoreFarseerFragment : Fragment() {
         binding.recyclerViewMediaList.layoutManager = GridLayoutManager(context, 4).apply {
             orientation = GridLayoutManager.VERTICAL
         }
-        adapter = MediaStoreAdapter(images)
+        adapter = MediaStoreAdapter(images) { position, media ->
+            if (position == 0) {
+                return@MediaStoreAdapter
+            }
+            findNavController().navigate(R.id.action_homeMediaStoreFragment_to_mediaStoreDetailFragment, bundleOf(
+                "mediaUri" to media.uri
+            ))
+        }
         binding.recyclerViewMediaList.adapter = adapter
         binding.recyclerViewMediaList.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
@@ -93,7 +106,6 @@ class MediaStoreFarseerFragment : Fragment() {
         })
     }
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     @SuppressLint("NotifyDataSetChanged")
     private fun initObserver() {
         viewModel.mediaStoreLiveData.observe(requireActivity()) {
@@ -104,8 +116,10 @@ class MediaStoreFarseerFragment : Fragment() {
         viewModel.imageMediaStoreLiveData.observe(requireActivity()) {
             Log.i(TAG, "initObserver2: $it")
 //            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
-            images.addAll(it)
-            adapter.notifyDataSetChanged()
+            if (it.isNotEmpty()) {
+                images.addAll(it)
+                adapter.notifyDataSetChanged()
+            }
             isLoading = false
         }
     }

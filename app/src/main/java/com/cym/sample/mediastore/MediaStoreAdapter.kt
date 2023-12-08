@@ -15,7 +15,9 @@ import com.xmcc.androidbasesample.databinding.ItemMediaStoreListBinding
 /**
  * Created by caoj on 2023/11/27.
  */
-class MediaStoreAdapter(private val itemDataList: List<MediaStoreItem>): RecyclerView.Adapter<MediaStoreAdapter.MyHolder>() {
+class MediaStoreAdapter(private val itemDataList: List<MediaStoreItem>,
+                        private val itemClick: ((position: Int, media: MediaStoreItem)->Unit)? = null):
+    RecyclerView.Adapter<MediaStoreAdapter.MyHolder>() {
     private lateinit var binding: ItemMediaStoreListBinding
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         binding = ItemMediaStoreListBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -33,6 +35,9 @@ class MediaStoreAdapter(private val itemDataList: List<MediaStoreItem>): Recycle
             holder.imageView.setImageURI(itemDataList[position].uri)
             holder.imageView.scaleType = ImageView.ScaleType.CENTER_CROP
         }
+        holder.flRoot.setOnClickListener {
+            itemClick?.invoke(position, itemDataList[position])
+        }
     }
 
     override fun getItemCount(): Int {
@@ -41,6 +46,7 @@ class MediaStoreAdapter(private val itemDataList: List<MediaStoreItem>): Recycle
 
     inner class MyHolder: ViewHolder(binding.root) {
         val imageView = binding.ivMediaStore
+        val flRoot = binding.flRoot
     }
 }
 

@@ -132,14 +132,16 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
                 val sizeColumn = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.SIZE)
                 val path = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA)
                 val list = mutableListOf<MediaStoreItem>()
-                list.add(MediaStoreItem(
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    null,
-                    0,
-                    "拍照",
-                    0,
-                    0
-                ))
+                if (init) {
+                    list.add(MediaStoreItem(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        null,
+                        0,
+                        "拍照",
+                        0,
+                        0
+                    ))
+                }
 
                 while (it.moveToNext()) {
                     try {
@@ -162,13 +164,18 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
                         e.printStackTrace()
                     }
                 }
-                Log.i(TAG, "list.size ${list.size} $list: ")
+                Log.i(TAG, "init $init list.size ${list.size} $list: ")
 
                 //emit(list)
                 if (list.size > 1) {
+                    Log.i(TAG, "init updateImages22: $pageIndex $list")
                     imageMediaStoreLiveData.postValue(list)
                     pageIndex++
                 } else if (init) {
+                    if (pageIndex != 0) {
+                        return@launch
+                    }
+                    Log.i(TAG, "init updateImages33: $pageIndex $list")
                     imageMediaStoreLiveData.postValue(list)
                 }
 
