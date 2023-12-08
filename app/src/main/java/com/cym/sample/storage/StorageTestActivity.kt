@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.os.Environment
 import android.os.PersistableBundle
+import android.os.storage.StorageManager
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.xmcc.androidbasesample.databinding.ActivityStorageTestBinding
@@ -63,8 +64,11 @@ class StorageTestActivity: AppCompatActivity() {
     private var index = 1
 
     private fun read() {
+        if (!File("${filesDir.absolutePath}/$FILE_NAME").exists()) {
+            Log.i(TAG, "read: file not exists")
+            return
+        }
         val fis = openFileInput(FILE_NAME)
-
         try {
             val byteArray = ByteArray(fis.available())
             fis.read(byteArray)
@@ -100,6 +104,10 @@ class StorageTestActivity: AppCompatActivity() {
             if (!fileCache.exists()) {
                 fileCache.createNewFile()
             }
+            val storageManager = getSystemService(Context.STORAGE_SERVICE) as StorageManager
+            val uuid = storageManager.getUuidForPath(fileCache)
+            val bytes = storageManager.getCacheQuotaBytes(uuid)
+            Log.i(TAG, "readCache: cache $bytes uuid $uuid")
             fis = FileInputStream(fileCache)
             val byteArray = ByteArray(fis.available())
             fis.read(byteArray)
