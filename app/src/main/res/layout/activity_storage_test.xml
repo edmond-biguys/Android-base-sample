@@ -93,4 +93,15 @@
         android:layout_marginTop="16dp"
         android:text="清 理 数 据"
         />
+
+    <Button
+        android:id="@+id/btnShowPath"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnClearCache"
+        android:layout_marginTop="16dp"
+        android:text="文 件 显 示"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>

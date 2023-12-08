@@ -1,6 +1,7 @@
 package com.cym.sample.storage
 
 import android.content.Context
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.os.PersistableBundle
@@ -59,6 +60,55 @@ class StorageTestActivity: AppCompatActivity() {
         }
         binding.btnClearCache.setOnClickListener {
             clearCacheAndFiles()
+        }
+        binding.btnShowPath.setOnClickListener {
+            val root = Environment.getRootDirectory()
+            val p1 = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                Environment.getStorageDirectory()
+            } else {
+                null
+            }
+            val p2 = Environment.getExternalStorageDirectory()
+            val p3 = Environment.getDownloadCacheDirectory()
+            Log.i(TAG, "initClickListener: root $root p1 $p1 p2 $p2 p3 $p3")
+            Environment.DIRECTORY_DOWNLOADS
+
+            // 下载
+            val downloads = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            // 闹铃
+            val alarms = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_ALARMS)
+            // 有声书
+            val audioBooks = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_AUDIOBOOKS)
+            } else {
+                null
+            }
+            // 相机目录 digital camera in memory
+            val dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+            // 文档
+            val documents = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            val movies = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MOVIES)
+            val music = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_MUSIC)
+            // 通知
+            val notifications = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_NOTIFICATIONS)
+
+            val pictures = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES)
+            //播客
+            val podcasts = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PODCASTS)
+            //录音
+            val recordings = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RECORDINGS)
+            } else {
+                null
+            }
+            //铃声
+            val ringtones = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_RINGTONES)
+
+            Log.i(TAG, "initClickListener: downloads $downloads")
+            Log.i(TAG, "initClickListener: alarms $alarms audioBooks $audioBooks dcim $dcim documents $documents movies $movies music $music notifications $notifications pictures $pictures podcasts $podcasts recordings $recordings ringtones $ringtones")
+            writeFile(downloads.absolutePath, "test.txt", "test")
+
+
         }
     }
     private var index = 1
