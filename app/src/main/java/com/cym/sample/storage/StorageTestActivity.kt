@@ -7,6 +7,9 @@ import android.os.Environment
 import android.os.PersistableBundle
 import android.os.storage.StorageManager
 import android.util.Log
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.registerForActivityResult
 import androidx.appcompat.app.AppCompatActivity
 import com.xmcc.androidbasesample.databinding.ActivityStorageTestBinding
 import java.io.File
@@ -110,7 +113,32 @@ class StorageTestActivity: AppCompatActivity() {
 
 
         }
+
+        binding.btnPickMedia.setOnClickListener {
+            startPickMedia()
+        }
+
+        binding.btnPickMultiMedia.setOnClickListener {
+            startPickMultiMedia()
+        }
+
     }
+    private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri->
+        Log.i(TAG, "startPickMedia: $uri")
+    }
+    private val pickMultiMedia = registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia()) { list ->
+        Log.i(TAG, "pickMultiMedia: $list")
+    }
+    private fun startPickMedia() {
+
+//        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+    }
+
+    private fun startPickMultiMedia() {
+        pickMultiMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageAndVideo))
+    }
+
     private var index = 1
 
     private fun read() {

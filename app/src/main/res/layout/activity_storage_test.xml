@@ -104,4 +104,26 @@
         android:layout_marginTop="16dp"
         android:text="文 件 显 示"
         />
+
+    <Button
+        android:id="@+id/btnPickMedia"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnShowPath"
+        android:layout_marginTop="16dp"
+        android:text="PICK MEDIA"
+        />
+
+    <Button
+        android:id="@+id/btnPickMultiMedia"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnPickMedia"
+        android:layout_marginTop="16dp"
+        android:text="PICK MULTI MEDIA"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
