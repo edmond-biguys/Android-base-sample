@@ -41,6 +41,7 @@ class MediaStoreFarseerFragment : Fragment() {
         super.onCreate(savedInstanceState)
         //viewModel = ViewModelProvider(this)[MediaStoreFarseerViewModel::class.java]
         viewModel.getMediaStoreData()
+        initObserver()
         Log.i(TAG, "onCreate: ")
 
     }
@@ -51,7 +52,6 @@ class MediaStoreFarseerFragment : Fragment() {
         Log.i(TAG, "onCreateView: ")
         initListener()
         initGrid()
-        initObserver()
         viewModel.updateImages(true)
         return binding.root
     }
@@ -106,6 +106,12 @@ class MediaStoreFarseerFragment : Fragment() {
         })
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.i(TAG, "onDestroyView: ")
+        viewModel.imageMediaStoreLiveData.removeObservers(requireActivity())
+    }
+
     @SuppressLint("NotifyDataSetChanged")
     private fun initObserver() {
         viewModel.mediaStoreLiveData.observe(requireActivity()) {
@@ -122,6 +128,26 @@ class MediaStoreFarseerFragment : Fragment() {
             }
             isLoading = false
         }
+//        binding.root.postDelayed({
+//            viewModel.imageMediaStoreLiveData.observe(requireActivity()) {
+//                Log.i(TAG, "initObserver4: $it")
+////            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
+//                if (it.isNotEmpty()) {
+//                    images.addAll(it)
+//                    adapter.notifyDataSetChanged()
+//                }
+//                isLoading = false
+//            }
+//        }, 4000)
+//        viewModel.imageMediaStoreLiveData.observe(requireActivity()) {
+//            Log.i(TAG, "initObserver3: $it")
+////            binding.recyclerViewMediaList.adapter = MediaStoreAdapter(it)
+//            if (it.isNotEmpty()) {
+//                images.addAll(it)
+//                adapter.notifyDataSetChanged()
+//            }
+//            isLoading = false
+//        }
     }
 
     private fun initListener() {

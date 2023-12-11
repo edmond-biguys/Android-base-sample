@@ -91,7 +91,12 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
 
     private var pageIndex = 0
     private val pageSize = 39
+    private var initialized = false
     fun updateImages(init: Boolean = false) {
+        if (init && initialized) {
+            return
+        }
+        initialized = true
         viewModelScope.launch {
             val cr = getApplication<Application>().contentResolver
 
@@ -112,6 +117,7 @@ class MediaStoreFarseerViewModel(application: Application) : AndroidViewModel(ap
             )
 
             val limit = "$pageSize offset ${pageSize*pageIndex}"
+            Log.i(TAG, "updateImages: $limit")
             val queryArgs = createSqlQueryBundle(selection, selectionArgs, sortOrder, limit)
 //        val cursor = cr.query(
 //            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
