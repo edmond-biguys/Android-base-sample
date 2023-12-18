@@ -16,4 +16,6 @@ interface List<T> {
     fun clear()
     //size
     fun size(): Int
+
+    fun <E> iterator(): Iterator<E>
 }

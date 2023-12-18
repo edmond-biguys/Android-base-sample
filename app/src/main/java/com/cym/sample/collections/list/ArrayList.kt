@@ -130,4 +130,23 @@ class ArrayList<T>: List<T> {
         return index != -1
     }
 
+    override fun <T> iterator(): Iterator<T> {
+        return MyIterator()
+    }
+
+    inner class MyIterator<T>: Iterator<T> {
+        private var index = 0
+
+        override fun hasNext(): Boolean {
+            return index < size()
+        }
+
+        override fun next(): T {
+            index++
+            return get(index) as T
+        }
+
+
+    }
+
 }
