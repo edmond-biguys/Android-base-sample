@@ -17,6 +17,7 @@ import com.cym.androidx.coordinatorlayout.viewpager2.ViewPager2SampleActivity
 import com.cym.jetpack.workmanager.WorkManagerSampleActivity
 import com.cym.sample.camera.CameraXSampleActivity
 import com.cym.sample.contentprovider.ContentProviderSampleActivity
+import com.cym.sample.download.FileDownloadActivity
 import com.cym.sample.flow.FlowSampleActivity
 import com.cym.sample.mediastore.MediaStoreFarseerActivity
 import com.cym.sample.persistence.PersistenceSampleActivity
@@ -57,7 +58,7 @@ class TripListFragment : Fragment() {
                 "WorkManager", "ViewBinding", "Garden",
                 "CoordinatorLayout", "ViewPager2", "Lifecycle Test", "Start Mode",
                 "Persistence", "FlowSample", "判断、选择题", "名词解释", "判断题-否",
-                "ContentProvider","CameraX", "MediaStore", "StorageTest"
+                "ContentProvider","CameraX", "MediaStore", "StorageTest", "DownloadTest"
             )
 
             recyclerView01.adapter = MyAdapter(itemDataList, requireContext())
@@ -98,6 +99,7 @@ class TripListFragment : Fragment() {
                     items[position] == "CameraX" -> navigateCameraXActivity(context)
                     items[position] == "MediaStore" -> navigateMediaStoreActivity(context)
                     items[position] == "StorageTest" -> navigateStorageTestActivity(context)
+                    items[position] == "DownloadTest" -> navigateDownloadTestActivity(context)
                     else -> println("do nothing")
                 }
 
@@ -158,6 +160,10 @@ class TripListFragment : Fragment() {
 
         private fun navigateStorageTestActivity(context: Context) {
             context.startActivity(Intent(context, StorageTestActivity::class.java))
+        }
+
+        private fun navigateDownloadTestActivity(context: Context) {
+            context.startActivity(Intent(context, FileDownloadActivity::class.java))
         }
 
         override fun getItemCount(): Int {

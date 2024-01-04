@@ -251,6 +251,8 @@ package="com.xmcc.androidbasesample">
     <activity android:name="com.cym.sample.storage.StorageTestActivity"
         android:exported="false"
         />
+    <activity android:name="com.cym.sample.download.FileDownloadActivity"
+        android:exported="false"/>
 
     <service
         android:name="com.cym.sample.binder.RemoteService"
