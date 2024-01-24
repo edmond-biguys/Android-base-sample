@@ -2,24 +2,24 @@
 xmlns:tools="http://schemas.android.com/tools"
 package="com.xmcc.androidbasesample">
 
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.BLUETOOTH" />
+<uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
-    <uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.READ_USER_DICTIONARY" />
+<uses-permission android:name="android.permission.WRITE_USER_DICTIONARY" />
+<uses-permission android:name="android.permission.CAMERA" />
+<uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
+<uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
+<uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 <uses-permission
     android:name="android.permission.READ_LOGS"
@@ -241,18 +241,21 @@ package="com.xmcc.androidbasesample">
 
     <activity
         android:name="com.cym.sample.camera.CameraXSampleActivity"
-        android:exported="false"
-        />
+        android:exported="false" />
 
     <activity
         android:name="com.cym.sample.mediastore.MediaStoreFarseerActivity"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.sample.storage.StorageTestActivity"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.sample.download.FileDownloadActivity"
+        android:exported="false" />
+    <activity
+        android:name="com.cym.sample.threadtest.ThreadTestActivity"
         android:exported="false"
         />
-    <activity android:name="com.cym.sample.storage.StorageTestActivity"
-        android:exported="false"
-        />
-    <activity android:name="com.cym.sample.download.FileDownloadActivity"
-        android:exported="false"/>
 
     <service
         android:name="com.cym.sample.binder.RemoteService"
